@@ -6,16 +6,17 @@ import java.util.UUID
 
 data class Order(
     val id: UUID = UUID.randomUUID(),
-    var totalAmount: Amount,
+    val customerId: UUID,
+    var totalAmount: Amount = Amount(),
     val products: MutableList<Product> = mutableListOf(),
-    val coupon: Coupon? = null
+    val coupon: Coupon? = null,
 ) {
 
     init {
         calculateTotal()
     }
 
-    fun addProducts(product: Product) {
+    fun addProduct(product: Product) {
         products.add(product)
         calculateTotal()
     }
