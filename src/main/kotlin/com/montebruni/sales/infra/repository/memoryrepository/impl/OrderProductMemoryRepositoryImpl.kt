@@ -11,4 +11,6 @@ class OrderProductMemoryRepositoryImpl : OrderProductMemoryRepository {
     private val orderProducts = mutableListOf<OrderProductMemoryRepositoryModel>()
 
     override fun findById(id: UUID): OrderProductMemoryRepositoryModel? = orderProducts.find { it.id == id }
+    override fun findByOrderId(orderId: UUID): List<OrderProductMemoryRepositoryModel> =
+        orderProducts.filter { it.orderId == orderId }
 }

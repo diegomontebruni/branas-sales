@@ -15,4 +15,7 @@ class OrderProductMemoryRepositoryAdapter(
     override fun findById(id: UUID): OrderProduct =
         orderProductMemoryRepositoryImpl.findById(id)?.toOrderProduct()
             ?: throw IllegalArgumentException("Invalid product")
+
+    override fun findByOrderId(orderId: UUID): List<OrderProduct> =
+        orderProductMemoryRepositoryImpl.findByOrderId(orderId = orderId).map { it.toOrderProduct() }
 }

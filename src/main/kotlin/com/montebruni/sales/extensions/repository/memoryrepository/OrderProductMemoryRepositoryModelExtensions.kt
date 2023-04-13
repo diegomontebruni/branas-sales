@@ -6,6 +6,7 @@ import com.montebruni.sales.infra.repository.memoryrepository.model.OrderProduct
 
 fun OrderProductMemoryRepositoryModel.toOrderProduct() = OrderProduct(
     id = id,
+    orderId = orderId,
     description = description,
     price = Amount(price),
     quantity = quantity

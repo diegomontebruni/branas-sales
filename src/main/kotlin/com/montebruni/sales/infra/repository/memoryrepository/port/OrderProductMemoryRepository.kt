@@ -6,4 +6,5 @@ import java.util.*
 interface OrderProductMemoryRepository {
 
     fun findById(id: UUID): OrderProductMemoryRepositoryModel?
+    fun findByOrderId(orderId: UUID): List<OrderProductMemoryRepositoryModel>
 }
