@@ -5,7 +5,7 @@ import java.util.*
 
 data class OrderProduct(
     val id: UUID = UUID.randomUUID(),
-    val productId: UUID,
+    val description: String,
     val price: Amount,
     val quantity: Int
 ) {

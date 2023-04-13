@@ -1,12 +1,13 @@
 package com.montebruni.sales.domain.entity
 
 import com.montebruni.sales.domain.valueobjects.Amount
+import com.montebruni.sales.domain.valueobjects.Document
 import com.montebruni.sales.extensions.toAmount
 import java.util.UUID
 
 data class Order(
     val id: UUID = UUID.randomUUID(),
-    val customerId: UUID,
+    val document: Document,
     var totalAmount: Amount = Amount(),
     val products: MutableList<OrderProduct> = mutableListOf(),
     val coupon: Coupon? = null,
