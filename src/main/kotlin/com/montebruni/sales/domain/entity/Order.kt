@@ -17,11 +17,6 @@ data class Order(
         calculateTotal()
     }
 
-    fun addProduct(product: OrderProduct) {
-        products.add(product)
-        calculateTotal()
-    }
-
     private fun calculateTotal() {
         totalAmount = products.sumOf { it.calculateTotalAmount().value }.toAmount().let {
             coupon?.calculateDiscount(it) ?: it
