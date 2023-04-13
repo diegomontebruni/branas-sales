@@ -8,7 +8,7 @@ data class Coupon(
 ) {
 
     init {
-        if (percentage < 0 || percentage > 100) throw Exception("Invalid percentage")
+        if (percentage < 0 || percentage > 100) throw IllegalArgumentException("Invalid percentage")
     }
 
     fun calculateDiscount(totalAmount: Amount): Amount = totalAmount.percentage(percentage)
