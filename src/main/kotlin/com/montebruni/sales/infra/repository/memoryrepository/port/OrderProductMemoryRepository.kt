@@ -4,7 +4,7 @@ import com.montebruni.sales.infra.repository.memoryrepository.model.OrderProduct
 import java.util.*
 
 interface OrderProductMemoryRepository {
-
+    fun save(orderProductModel: OrderProductMemoryRepositoryModel) : OrderProductMemoryRepositoryModel
     fun findById(id: UUID): OrderProductMemoryRepositoryModel?
     fun findByOrderId(orderId: UUID): List<OrderProductMemoryRepositoryModel>
 }
