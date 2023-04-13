@@ -9,7 +9,7 @@ data class Order(
     val id: UUID = UUID.randomUUID(),
     val document: Document,
     var totalAmount: Amount = Amount(),
-    val products: MutableList<OrderProduct> = mutableListOf(),
+    val products: List<OrderProduct> = emptyList(),
     val coupon: Coupon? = null,
 ) {
 
