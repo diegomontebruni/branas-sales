@@ -5,7 +5,7 @@ import com.montebruni.sales.domain.port.CouponRepository
 import com.montebruni.sales.extensions.repository.memoryrepository.toCoupon
 import com.montebruni.sales.infra.repository.memoryrepository.datasource.createCouponDatasource
 
-class CouponMemoryRepositoryImpl : CouponRepository {
+class CouponMemoryRepositoryAdapter : CouponRepository {
 
     private val coupons = createCouponDatasource()
 

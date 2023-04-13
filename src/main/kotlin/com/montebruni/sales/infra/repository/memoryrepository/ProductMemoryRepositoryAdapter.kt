@@ -6,7 +6,7 @@ import com.montebruni.sales.extensions.repository.memoryrepository.toProduct
 import com.montebruni.sales.infra.repository.memoryrepository.datasource.createProductDataSource
 import java.util.*
 
-class ProductMemoryRepository : ProductRepository {
+class ProductMemoryRepositoryAdapter : ProductRepository {
 
     private val products = createProductDataSource()
 

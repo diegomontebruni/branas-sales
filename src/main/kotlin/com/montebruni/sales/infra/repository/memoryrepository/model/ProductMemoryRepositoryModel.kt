@@ -1,8 +1,8 @@
-package com.montebruni.sales.infra.repository.memoryrepository.output
+package com.montebruni.sales.infra.repository.memoryrepository.model
 
 import java.util.*
 
-data class ProductMemoryRepositoryOutput(
+data class ProductMemoryRepositoryModel(
     val id: UUID,
     val description: String,
     val price: Double,

@@ -6,7 +6,7 @@ import com.montebruni.sales.extensions.repository.memoryrepository.toCustomer
 import com.montebruni.sales.infra.repository.memoryrepository.datasource.createCustomerDatasource
 import java.util.UUID
 
-class CustomerMemoryRepositoryImpl : CustomerRepository {
+class CustomerMemoryRepositoryAdapter : CustomerRepository {
 
     private val customers = createCustomerDatasource()
 
