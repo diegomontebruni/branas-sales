@@ -5,11 +5,11 @@ import java.util.*
 
 fun createOrder() = Order(
     customerId = UUID.randomUUID(),
-    products = mutableListOf(createProduct(), createProduct(), createProduct())
+    products = mutableListOf(createOrderProduct(), createOrderProduct(), createOrderProduct())
 )
 
 fun createOrderWithCoupon() = Order(
     customerId = UUID.randomUUID(),
-    products = mutableListOf(createProduct(), createProduct(), createProduct()),
+    products = mutableListOf(createOrderProduct(), createOrderProduct(), createOrderProduct()),
     coupon = createCoupon()
 )

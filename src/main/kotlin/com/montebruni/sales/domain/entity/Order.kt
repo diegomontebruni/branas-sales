@@ -8,7 +8,7 @@ data class Order(
     val id: UUID = UUID.randomUUID(),
     val customerId: UUID,
     var totalAmount: Amount = Amount(),
-    val products: MutableList<Product> = mutableListOf(),
+    val products: MutableList<OrderProduct> = mutableListOf(),
     val coupon: Coupon? = null,
 ) {
 
@@ -16,7 +16,7 @@ data class Order(
         calculateTotal()
     }
 
-    fun addProduct(product: Product) {
+    fun addProduct(product: OrderProduct) {
         products.add(product)
         calculateTotal()
     }

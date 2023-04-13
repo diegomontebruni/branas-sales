@@ -1,11 +1,11 @@
 package com.montebruni.sales.domain.entity
 
 import com.montebruni.sales.domain.valueobjects.Amount
-import java.util.UUID
+import java.util.*
 
-data class Product(
+data class OrderProduct(
     val id: UUID = UUID.randomUUID(),
-    val description: String,
+    val productId: UUID,
     val price: Amount,
     val quantity: Int
 ) {
@@ -13,4 +13,6 @@ data class Product(
     init {
         if (quantity < 1) throw IllegalArgumentException("Invalid quantity")
     }
+
+    fun calculateTotalAmount(): Amount = price.multiply(quantity)
 }
