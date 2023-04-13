@@ -8,5 +8,9 @@ data class Product(
     val quantity: Int
 ) {
 
+    init {
+        if (quantity < 1) throw IllegalArgumentException("Invalid quantity")
+    }
+
     fun calculateTotalAmount(): Amount = amount.multiply(quantity)
 }
