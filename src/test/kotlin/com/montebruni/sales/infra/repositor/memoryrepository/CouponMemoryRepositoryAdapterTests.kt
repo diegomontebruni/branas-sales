@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class CouponMemoryRepositoryAdapterTests(
-    @MockK private val  couponMemoryRepository : CouponMemoryRepository
+    @MockK private val couponMemoryRepository : CouponMemoryRepository
 ) : UnitTests() {
 
     @InjectMockKs

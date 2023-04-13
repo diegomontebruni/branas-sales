@@ -4,13 +4,13 @@ import com.montebruni.sales.domain.entity.OrderProduct
 import com.montebruni.sales.domain.port.OrderProductRepository
 import com.montebruni.sales.extensions.domain.entity.toOrderProductMemoryRepositoryModel
 import com.montebruni.sales.extensions.repository.memoryrepository.toOrderProduct
-import com.montebruni.sales.infra.repository.memoryrepository.impl.OrderProductMemoryRepositoryImpl
+import com.montebruni.sales.infra.repository.memoryrepository.port.OrderProductMemoryRepository
 import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
 class OrderProductMemoryRepositoryAdapter(
-    private val orderProductMemoryRepositoryImpl: OrderProductMemoryRepositoryImpl
+    private val orderProductMemoryRepositoryImpl: OrderProductMemoryRepository
 ) : OrderProductRepository {
 
     override fun save(orderProduct: OrderProduct): OrderProduct =
