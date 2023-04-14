@@ -40,12 +40,13 @@ class CreateOrderTest(
         val input = createCreateOrderInput()
         val orderId = UUID.randomUUID()
         val expectedTotalAmount = "6.00"
+        val expectedOrder = createOrder().copy(id = orderId)
 
         val orderRepositorySlot = slot<Order>()
 
         mockkStatic(UUID::class)
         every { UUID.randomUUID() } returns orderId
-        every { orderRepository.save(capture(orderRepositorySlot)) } returns createOrder()
+        every { orderRepository.save(capture(orderRepositorySlot)) } returns expectedOrder
 
         val output = useCase.execute(input)
 
@@ -65,16 +66,17 @@ class CreateOrderTest(
     @Test
     fun `should create an order when has a valid input with valid coupon`() {
         val input = createCreateOrderWithCouponInput()
-        val expectedCoupon = createCoupon()
         val orderId = UUID.randomUUID()
         val expectedTotalAmount = "5.40"
+        val expectedCoupon = createCoupon()
+        val expectedOrder = createOrder().copy(id = orderId)
 
         val orderRepositorySlot = slot<Order>()
         val couponSlot = slot<String>()
 
         mockkStatic(UUID::class)
         every { UUID.randomUUID() } returns orderId
-        every { orderRepository.save(capture(orderRepositorySlot)) } returns createOrder()
+        every { orderRepository.save(capture(orderRepositorySlot)) } returns expectedOrder
         every { couponRepository.findByCode(capture(couponSlot)) } returns expectedCoupon
 
         val output = useCase.execute(input)
