@@ -3,6 +3,8 @@ package com.montebruni.sales.domain.valueobjects
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class DocumentTests {
 
@@ -13,8 +15,9 @@ class DocumentTests {
         assertEquals(input, Document(input).value)
     }
 
-    @Test
-    fun `should throw exception when document is not a valid CPF`() {
-        assertThrows<IllegalArgumentException> { Document("123") }
+    @ParameterizedTest
+    @ValueSource(strings = ["123", "1111111111", "12312312312", "0190293019222", "403693650621"])
+    fun `should throw exception when document is not a valid CPF`(value: String) {
+        assertThrows<IllegalArgumentException> { Document(value) }
     }
 }
