@@ -1,0 +1,8 @@
+logging:
+    level:
+        org:
+            springframework:
+                web: ${LOG_LEVEL:DEBUG}
+        com:
+            montebruni:
+                sales: ${LOG_LEVEL:DEBUG}
