@@ -30,6 +30,7 @@ class CreateOrder(
     }
 
     private fun createOrderFromInput(input: CreateOrderInput, orderId: UUID): Order = Order(
+        id = orderId,
         document = Document(input.document),
         products = input.products.map { createOrderProductFromInput(it, orderId) },
         coupon = input.coupon?.let { getCoupon(it) }
