@@ -5,7 +5,6 @@ import com.montebruni.sales.domain.entity.Order
 import com.montebruni.sales.domain.port.CouponRepository
 import com.montebruni.sales.domain.port.OrderRepository
 import com.montebruni.sales.fixture.createCoupon
-import com.montebruni.sales.fixture.createOrder
 import com.montebruni.sales.fixture.usecase.createCreateOrderInput
 import com.montebruni.sales.fixture.usecase.createCreateOrderWithCouponInput
 import io.mockk.confirmVerified
@@ -39,14 +38,13 @@ class CreateOrderTest(
     fun `should create an order when has a valid input without coupon`() {
         val input = createCreateOrderInput()
         val orderId = UUID.randomUUID()
-        val expectedTotalAmount = "6.00"
-        val expectedOrder = createOrder().copy(id = orderId)
+        val expectedTotalAmount = "6.55"
 
         val orderRepositorySlot = slot<Order>()
 
         mockkStatic(UUID::class)
         every { UUID.randomUUID() } returns orderId
-        every { orderRepository.save(capture(orderRepositorySlot)) } returns expectedOrder
+        every { orderRepository.save(capture(orderRepositorySlot)) } answers { orderRepositorySlot.captured }
 
         val output = useCase.execute(input)
 
@@ -56,6 +54,7 @@ class CreateOrderTest(
         assertEquals(orderId, orderRepositorySlot.captured.products.first().orderId)
         assertNull(orderRepositorySlot.captured.coupon)
         assertEquals(orderId, output.orderId)
+        assertEquals(expectedTotalAmount, output.totalAmount.toString())
         assertEquals(expectedTotalAmount, orderRepositorySlot.captured.totalAmount.toString())
 
         verify {
@@ -67,16 +66,15 @@ class CreateOrderTest(
     fun `should create an order when has a valid input with valid coupon`() {
         val input = createCreateOrderWithCouponInput()
         val orderId = UUID.randomUUID()
-        val expectedTotalAmount = "5.40"
+        val expectedTotalAmount = "5.71"
         val expectedCoupon = createCoupon()
-        val expectedOrder = createOrder().copy(id = orderId)
 
         val orderRepositorySlot = slot<Order>()
         val couponSlot = slot<String>()
 
         mockkStatic(UUID::class)
         every { UUID.randomUUID() } returns orderId
-        every { orderRepository.save(capture(orderRepositorySlot)) } returns expectedOrder
+        every { orderRepository.save(capture(orderRepositorySlot)) } answers { orderRepositorySlot.captured }
         every { couponRepository.findByCode(capture(couponSlot)) } returns expectedCoupon
 
         val output = useCase.execute(input)
@@ -89,6 +87,7 @@ class CreateOrderTest(
         assertEquals(expectedCoupon.code, orderRepositorySlot.captured.coupon?.code)
         assertEquals(expectedTotalAmount, orderRepositorySlot.captured.totalAmount.toString())
         assertEquals(input.coupon, couponSlot.captured)
+        assertEquals(expectedTotalAmount, output.totalAmount.toString())
 
         verify {
             orderRepository.save(orderRepositorySlot.captured)

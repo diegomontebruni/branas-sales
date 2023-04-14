@@ -20,5 +20,10 @@ class OrderController(
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     fun createOrder(@RequestBody body: CreateOrderRequest): CreateOrderResponse =
-        CreateOrderResponse(orderId = createOrder.execute(body.toCreateOrderInput()).orderId)
+        createOrder.execute(body.toCreateOrderInput()).let {
+            CreateOrderResponse(
+                orderId = it.orderId,
+                totalAmount = it.totalAmount
+            )
+        }
 }
