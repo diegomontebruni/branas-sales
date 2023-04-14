@@ -13,6 +13,6 @@ Cada exercício da semana foi separado em uma branch diferente. Para acessar cad
 ### Branches
 
 - [Exercício da Semana 1](https://github.com/Montebruni/branas-sales/tree/parte-1)
-- [Exercício da Semana 2](https://github.com/Montebruni/branas-sales/tree/parte-2)
-- [Exercício da Semana 3](https://github.com/Montebruni/branas-sales/tree/parte-3)
-- [Exercício da Semana 4](https://github.com/Montebruni/branas-sales/tree/parte-4)
+- Exercício da Semana 2
+- Exercício da Semana 3
+- Exercício da Semana 4
