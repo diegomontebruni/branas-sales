@@ -9,7 +9,7 @@ data class Order(
     val id: UUID = UUID.randomUUID(),
     val document: Document,
     var totalAmount: Amount = Amount(),
-    val products: List<OrderProduct> = emptyList(),
+    val items: List<OrderItem> = emptyList(),
     val coupon: Coupon? = null,
 ) {
 
@@ -18,7 +18,7 @@ data class Order(
     }
 
     private fun calculateTotal() {
-        totalAmount = products.sumOf { it.calculateTotalAmount().value }.toAmount().let {
+        totalAmount = items.sumOf { it.calculateTotalAmount().value }.toAmount().let {
             coupon?.calculateDiscount(it) ?: it
         }
     }

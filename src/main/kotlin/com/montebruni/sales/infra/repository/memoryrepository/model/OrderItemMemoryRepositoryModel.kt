@@ -2,7 +2,7 @@ package com.montebruni.sales.infra.repository.memoryrepository.model
 
 import java.util.*
 
-data class OrderProductMemoryRepositoryModel(
+data class OrderItemMemoryRepositoryModel(
     val id: UUID,
     val orderId: UUID,
     val description: String,

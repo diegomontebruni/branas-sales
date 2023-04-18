@@ -52,7 +52,7 @@ class OrderControllerIT : BaseRestIT() {
             .andExpect(jsonPath("total_amount").value(expectedOutput.totalAmount.toString()))
             .run {
                 assertEquals(request.document, useCaseSlot.captured.document)
-                assertEquals(request.products.size, useCaseSlot.captured.products.size)
+                assertEquals(request.items.size, useCaseSlot.captured.items.size)
                 assertNull(useCaseSlot.captured.coupon)
             }
 

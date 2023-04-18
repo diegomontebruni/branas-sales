@@ -3,7 +3,7 @@ package com.montebruni.sales.domain.entity
 import com.montebruni.sales.domain.valueobjects.Amount
 import java.util.*
 
-data class OrderProduct(
+data class OrderItem(
     val id: UUID = UUID.randomUUID(),
     val orderId: UUID,
     val description: String,
