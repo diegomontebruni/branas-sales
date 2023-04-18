@@ -2,10 +2,10 @@ package com.montebruni.sales.usecase.input
 
 data class CreateOrderInput(
     val document: String,
-    val products: List<OrderProductInput>,
+    val items: List<ItemInput>,
     val coupon: String? = null
 ) {
-    data class OrderProductInput(
+    data class ItemInput(
         val description: String,
         val price: Double,
         val quantity: Int

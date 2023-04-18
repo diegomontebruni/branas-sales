@@ -4,10 +4,10 @@ import com.montebruni.sales.usecase.input.CreateOrderInput
 
 data class CreateOrderRequest(
     val document: String,
-    val products: List<OrderProductRequest>,
+    val items: List<ItemRequest>,
     val coupon: String? = null
 ) {
-    data class OrderProductRequest(
+    data class ItemRequest(
         val description: String,
         val price: Double,
         val quantity: Int
@@ -16,7 +16,7 @@ data class CreateOrderRequest(
 
 fun CreateOrderRequest.toCreateOrderInput() = CreateOrderInput(
     document = document,
-    products = products.map { CreateOrderInput.OrderProductInput(
+    items = items.map { CreateOrderInput.ItemInput(
         description = it.description,
         price = it.price,
         quantity = it.quantity

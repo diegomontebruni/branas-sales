@@ -1,7 +1,7 @@
 package com.montebruni.sales.usecase
 
 import com.montebruni.sales.domain.entity.Order
-import com.montebruni.sales.domain.entity.OrderProduct
+import com.montebruni.sales.domain.entity.OrderItem
 import com.montebruni.sales.domain.port.CouponRepository
 import com.montebruni.sales.domain.port.OrderRepository
 import com.montebruni.sales.domain.valueobjects.Amount
@@ -36,11 +36,11 @@ class CreateOrder(
     private fun createOrderFromInput(input: CreateOrderInput, orderId: UUID): Order = Order(
         id = orderId,
         document = Document(input.document),
-        products = input.products.map { createOrderProductFromInput(it, orderId) },
+        items = input.items.map { createItemFromInput(it, orderId) },
         coupon = input.coupon?.let { getCoupon(it) }
     )
 
-    private fun createOrderProductFromInput(input: CreateOrderInput.OrderProductInput, orderId: UUID) = OrderProduct(
+    private fun createItemFromInput(input: CreateOrderInput.ItemInput, orderId: UUID) = OrderItem(
         orderId = orderId,
         description = input.description,
         price = Amount(input.price),

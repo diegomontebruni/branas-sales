@@ -5,11 +5,11 @@ import com.montebruni.sales.domain.valueobjects.Document
 
 fun createOrder() = Order(
     document = Document("40369365062"),
-    products = mutableListOf(createOrderProduct(), createOrderProduct(), createOrderProduct())
+    items = mutableListOf(createOrderItem(), createOrderItem(), createOrderItem())
 )
 
 fun createOrderWithCoupon() = Order(
     document = Document("40369365062"),
-    products = mutableListOf(createOrderProduct(), createOrderProduct(), createOrderProduct()),
+    items = mutableListOf(createOrderItem(), createOrderItem(), createOrderItem()),
     coupon = createCoupon()
 )

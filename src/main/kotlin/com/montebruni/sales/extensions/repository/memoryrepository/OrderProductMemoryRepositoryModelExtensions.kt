@@ -1,10 +1,10 @@
 package com.montebruni.sales.extensions.repository.memoryrepository
 
-import com.montebruni.sales.domain.entity.OrderProduct
+import com.montebruni.sales.domain.entity.OrderItem
 import com.montebruni.sales.domain.valueobjects.Amount
-import com.montebruni.sales.infra.repository.memoryrepository.model.OrderProductMemoryRepositoryModel
+import com.montebruni.sales.infra.repository.memoryrepository.model.OrderItemMemoryRepositoryModel
 
-fun OrderProductMemoryRepositoryModel.toOrderProduct() = OrderProduct(
+fun OrderItemMemoryRepositoryModel.toOrderItem() = OrderItem(
     id = id,
     orderId = orderId,
     description = description,
