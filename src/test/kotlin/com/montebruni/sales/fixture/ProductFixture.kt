@@ -1,0 +1,14 @@
+package com.montebruni.sales.fixture
+
+import com.montebruni.sales.domain.entity.Product
+import com.montebruni.sales.domain.valueobjects.PositiveDouble
+import java.util.*
+
+fun createProduct() = Product(
+    id = UUID.randomUUID(),
+    description = "Camera",
+    height = PositiveDouble(20),
+    width = PositiveDouble(15),
+    length = PositiveDouble(10),
+    weight = PositiveDouble(1)
+)
