@@ -7,18 +7,18 @@ data class Document(val value: String) {
     }
 
     private fun isValidCPF(): Boolean {
-        val cpf = value.replace(".", "").replace("-", "")
+        val cpf = value.replace(Regex("[^\\d]"), "")
 
         if (cpf.length != 11 || cpf.all { it == cpf[0] }) return false
 
-        return isValidCPFFirstDigit(cpf) && isValidCPFSecondDigit(cpf)
+        return isValidDigit(cpf, 9) && isValidDigit(cpf, 10)
     }
 
-    private fun isValidCPFFirstDigit(cpf: String): Boolean {
+    private fun isValidDigit(cpf: String, digit: Int): Boolean {
         var soma = 0
 
-        for (i in 0 until 9) {
-            soma += cpf[i].digitToInt() * (10 - i)
+        for (i in 0 until digit) {
+            soma += cpf[i].digitToInt() * ((digit + 1) - i)
         }
 
         var digitoVerificador = 11 - (soma % 11)
@@ -27,22 +27,6 @@ data class Document(val value: String) {
             digitoVerificador = 0
         }
 
-        return cpf[9].digitToInt() == digitoVerificador
-    }
-
-    private fun isValidCPFSecondDigit(cpf: String): Boolean {
-        var soma = 0
-
-        for (i in 0 until 10) {
-            soma += cpf[i].digitToInt() * (11 - i)
-        }
-
-        var digitoVerificador = 11 - (soma % 11)
-
-        if (digitoVerificador > 9) {
-            digitoVerificador = 0
-        }
-
-        return cpf[10].digitToInt() == digitoVerificador
+        return cpf[digit].digitToInt() == digitoVerificador
     }
 }
