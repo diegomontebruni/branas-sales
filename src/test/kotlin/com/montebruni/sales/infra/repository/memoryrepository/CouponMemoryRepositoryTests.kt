@@ -1,4 +1,4 @@
-package com.montebruni.sales.infra.repositor.memoryrepository
+package com.montebruni.sales.infra.repository.memoryrepository
 
 import com.montebruni.sales.common.UnitTests
 import com.montebruni.sales.infra.repository.memoryrepository.impl.CouponMemoryRepositoryImpl
@@ -13,7 +13,8 @@ class CouponMemoryRepositoryTests : UnitTests() {
 
     @Test
     fun `should return coupon successfully when has a valid code`() {
-        val code = "1"
+        val code = "DESC10"
+
         val coupon = couponMemoryRepositoryImpl.findByCode(code)
 
         assertNotNull(coupon)
@@ -21,7 +22,7 @@ class CouponMemoryRepositoryTests : UnitTests() {
     }
 
     @Test
-    fun `should return null when has a invalid code`() {
+    fun `should return null when has an invalid code`() {
         val code = "1000"
         val coupon = couponMemoryRepositoryImpl.findByCode(code)
 

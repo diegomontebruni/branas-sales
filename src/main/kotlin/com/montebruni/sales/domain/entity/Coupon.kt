@@ -1,10 +1,12 @@
 package com.montebruni.sales.domain.entity
 
 import com.montebruni.sales.domain.valueobjects.Amount
+import java.time.Instant
 
 data class Coupon(
     val code: String,
-    val percentage: Long,
+    val percentage: Int,
+    val expirationAt: Instant
 ) {
 
     init {
@@ -12,4 +14,5 @@ data class Coupon(
     }
 
     fun calculateDiscount(totalAmount: Amount): Amount = totalAmount.percentage(percentage)
+    fun isValid(): Boolean = expirationAt.isAfter(Instant.now())
 }

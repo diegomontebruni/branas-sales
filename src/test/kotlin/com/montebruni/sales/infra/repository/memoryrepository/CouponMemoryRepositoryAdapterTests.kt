@@ -1,14 +1,15 @@
-package com.montebruni.sales.infra.repositor.memoryrepository
+package com.montebruni.sales.infra.repository.memoryrepository
 
 import com.montebruni.sales.common.UnitTests
 import com.montebruni.sales.fixture.infra.repository.memoryrepository.createCouponMemoryRepositoryModel
-import com.montebruni.sales.infra.repository.memoryrepository.CouponMemoryRepositoryAdapter
 import com.montebruni.sales.infra.repository.memoryrepository.port.CouponMemoryRepository
+import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.slot
 import io.mockk.verify
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -19,6 +20,11 @@ class CouponMemoryRepositoryAdapterTests(
 
     @InjectMockKs
     private lateinit var couponMemoryRepositoryAdapter: CouponMemoryRepositoryAdapter
+
+    @AfterEach
+    internal fun tearDown() {
+        confirmVerified(couponMemoryRepository)
+    }
 
     @Test
     fun `should find coupon successfully when code is valid`() {
