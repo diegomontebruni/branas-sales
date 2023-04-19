@@ -1,9 +1,12 @@
 package com.montebruni.sales.domain.entity
 
 import com.montebruni.sales.fixture.createOrder
+import com.montebruni.sales.fixture.createOrderItem
 import com.montebruni.sales.fixture.createOrderWithCoupon
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import java.util.UUID
 
 class OrderTests {
 
@@ -22,5 +25,19 @@ class OrderTests {
         val expectedTotalAmount = "2700.00"
 
         assertEquals(expectedTotalAmount, orderWithCoupon.totalAmount.toString())
+    }
+
+    @Test
+    fun `should throw exception when has a duplicated items`() {
+        val duplicatedId = UUID.randomUUID()
+
+        assertThrows<IllegalArgumentException> { order.copy(items = listOf(
+            createOrderItem().copy(id = duplicatedId),
+            createOrderItem().copy(id = duplicatedId),
+            createOrderItem(),
+            createOrderItem()
+        )) }.let {
+            assertEquals(it.message, "Has duplicated items on list")
+        }
     }
 }

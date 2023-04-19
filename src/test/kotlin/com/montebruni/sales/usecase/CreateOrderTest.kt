@@ -4,7 +4,10 @@ import com.montebruni.sales.common.UnitTests
 import com.montebruni.sales.domain.entity.Order
 import com.montebruni.sales.domain.port.CouponRepository
 import com.montebruni.sales.domain.port.OrderRepository
+import com.montebruni.sales.domain.port.ProductRepository
 import com.montebruni.sales.fixture.createCoupon
+import com.montebruni.sales.fixture.createExpiredCoupon
+import com.montebruni.sales.fixture.createProduct
 import com.montebruni.sales.fixture.usecase.createCreateOrderInput
 import com.montebruni.sales.fixture.usecase.createCreateOrderWithCouponInput
 import io.mockk.confirmVerified
@@ -23,7 +26,8 @@ import java.util.*
 
 class CreateOrderTest(
     @MockK private val orderRepository: OrderRepository,
-    @MockK private val couponRepository: CouponRepository
+    @MockK private val couponRepository: CouponRepository,
+    @MockK private val productRepository: ProductRepository,
 ) : UnitTests() {
 
     @InjectMockKs
@@ -31,7 +35,7 @@ class CreateOrderTest(
 
     @AfterEach
     internal fun tearDown() {
-        confirmVerified(orderRepository, couponRepository)
+        confirmVerified(orderRepository, couponRepository, productRepository)
     }
 
     @Test
@@ -41,10 +45,14 @@ class CreateOrderTest(
         val expectedTotalAmount = "6.55"
 
         val orderRepositorySlot = slot<Order>()
+        val productIdSlot = slot<UUID>()
 
         mockkStatic(UUID::class)
         every { UUID.randomUUID() } returns orderId
         every { orderRepository.save(capture(orderRepositorySlot)) } answers { orderRepositorySlot.captured }
+        every {
+            productRepository.findById(capture(productIdSlot))
+        } returns createProduct().copy(id = UUID.randomUUID())
 
         val output = useCase.execute(input)
 
@@ -59,6 +67,7 @@ class CreateOrderTest(
 
         verify {
             orderRepository.save(orderRepositorySlot.captured)
+            productRepository.findById(capture(productIdSlot))
         }
     }
 
@@ -106,6 +115,27 @@ class CreateOrderTest(
         every { couponRepository.findByCode(capture(couponSlot)) } throws IllegalArgumentException()
 
         assertThrows<IllegalArgumentException> { useCase.execute(input) }.run {
+            assertEquals(input.coupon, couponSlot.captured)
+        }
+
+        verify {
+            couponRepository.findByCode(couponSlot.captured)
+        }
+    }
+
+    @Test
+    fun `should throw exception when has a expired coupon`() {
+        val input = createCreateOrderWithCouponInput()
+        val expiredCoupon = createExpiredCoupon()
+        val couponSlot = slot<String>()
+        val orderId = UUID.randomUUID()
+
+        mockkStatic(UUID::class)
+        every { UUID.randomUUID() } returns orderId
+        every { couponRepository.findByCode(capture(couponSlot)) } returns expiredCoupon
+
+        assertThrows<IllegalArgumentException> { useCase.execute(input) }.run {
+            assertEquals(this.message, "Expired coupon")
             assertEquals(input.coupon, couponSlot.captured)
         }
 

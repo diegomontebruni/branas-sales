@@ -1,12 +1,15 @@
-package com.montebruni.sales.infra.repositor.memoryrepository
+package com.montebruni.sales.infra.repository.memoryrepository
 
 import com.montebruni.sales.common.UnitTests
 import com.montebruni.sales.fixture.infra.repository.memoryrepository.createOrderItemMemoryRepositoryModel
 import com.montebruni.sales.infra.repository.memoryrepository.impl.OrderItemMemoryRepositoryImpl
 import io.mockk.impl.annotations.InjectMockKs
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import java.util.UUID
+import java.util.*
 
 class OrderItemMemoryRepositoryTests : UnitTests() {
 
@@ -20,7 +23,7 @@ class OrderItemMemoryRepositoryTests : UnitTests() {
 
         assertEquals(orderItemModel.id, savedOrderItem.id)
         assertEquals(orderItemModel.orderId, savedOrderItem.orderId)
-        assertEquals(orderItemModel.description, savedOrderItem.description)
+        assertEquals(orderItemModel.productId, savedOrderItem.productId)
         assertEquals(orderItemModel.price, savedOrderItem.price)
         assertEquals(orderItemModel.quantity, savedOrderItem.quantity)
     }

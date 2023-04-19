@@ -14,8 +14,11 @@ data class Order(
 ) {
 
     init {
+        if (hasDuplicatedItems()) throw IllegalArgumentException("Has duplicated items on list")
         calculateTotal()
     }
+
+    private fun hasDuplicatedItems(): Boolean = items.groupingBy { it.product.id }.eachCount().any { it.value > 1}
 
     private fun calculateTotal() {
         totalAmount = items.sumOf { it.calculateTotalAmount().value }.toAmount().let {

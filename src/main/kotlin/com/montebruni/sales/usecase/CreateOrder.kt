@@ -1,9 +1,12 @@
 package com.montebruni.sales.usecase
 
+import com.montebruni.sales.domain.entity.Coupon
 import com.montebruni.sales.domain.entity.Order
 import com.montebruni.sales.domain.entity.OrderItem
+import com.montebruni.sales.domain.entity.Product
 import com.montebruni.sales.domain.port.CouponRepository
 import com.montebruni.sales.domain.port.OrderRepository
+import com.montebruni.sales.domain.port.ProductRepository
 import com.montebruni.sales.domain.valueobjects.Amount
 import com.montebruni.sales.domain.valueobjects.Document
 import com.montebruni.sales.usecase.input.CreateOrderInput
@@ -16,7 +19,8 @@ import java.util.*
 @Service
 class CreateOrder(
     @Autowired private val orderRepository: OrderRepository,
-    @Autowired private val couponRepository: CouponRepository
+    @Autowired private val couponRepository: CouponRepository,
+    @Autowired private val productRepository: ProductRepository,
 ) {
 
     fun execute(input: CreateOrderInput) : CreateOrderOutput {
@@ -37,17 +41,22 @@ class CreateOrder(
         id = orderId,
         document = Document(input.document),
         items = input.items.map { createItemFromInput(it, orderId) },
-        coupon = input.coupon?.let { getCoupon(it) }
+        coupon = input.coupon?.let { findCoupon(it) }
     )
 
     private fun createItemFromInput(input: CreateOrderInput.ItemInput, orderId: UUID) = OrderItem(
         orderId = orderId,
-        description = input.description,
+        product = findProduct(input.productId),
         price = Amount(input.price),
         quantity = input.quantity
     )
 
-    private fun getCoupon(couponCode: String) = couponRepository.findByCode(couponCode)
+    private fun findProduct(productId: UUID): Product = productRepository.findById(productId)
+
+    private fun findCoupon(couponCode: String): Coupon = couponRepository.findByCode(couponCode).let {
+        if (it.isValid()) return it
+        throw IllegalArgumentException("Expired coupon")
+    }
 
     companion object {
         val logger = KotlinLogging.logger { }

@@ -1,4 +1,4 @@
-package com.montebruni.sales.infra.repositor.memoryrepository
+package com.montebruni.sales.infra.repository.memoryrepository
 
 import com.montebruni.sales.common.UnitTests
 import com.montebruni.sales.fixture.infra.repository.memoryrepository.createOrderMemoryRepositoryModel
