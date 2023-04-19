@@ -32,7 +32,7 @@ class AmountTests {
     @Test
     fun `should get percentage value from a long`() {
         val expectedOutput = Amount(90.0)
-        val percent = 10L
+        val percent = 10
         val totalAmount = Amount("100")
 
         assertEquals(expectedOutput.value, totalAmount.percentage(percent).value)

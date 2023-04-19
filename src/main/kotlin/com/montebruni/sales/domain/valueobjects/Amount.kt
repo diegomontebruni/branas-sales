@@ -14,7 +14,7 @@ data class Amount(val value: BigDecimal = BigDecimal(0)) {
     constructor(value: Double) : this(BigDecimal(value.toString()).setScale(2, RoundingMode.HALF_EVEN))
 
     fun multiply(number: Int): Amount = Amount(value.multiply(BigDecimal(number)))
-    fun percentage(percent: Long): Amount =
+    fun percentage(percent: Int): Amount =
         value.subtract(value.multiply(BigDecimal(percent).divide(BigDecimal(100)))).toAmount()
 
     override fun toString(): String = value.toString()
