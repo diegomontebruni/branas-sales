@@ -14,7 +14,6 @@ import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
-import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.verify
 import org.junit.jupiter.api.AfterEach
@@ -41,27 +40,26 @@ class CreateOrderTest(
     @Test
     fun `should create an order when has a valid input without coupon`() {
         val input = createCreateOrderInput()
-        val orderId = UUID.randomUUID()
         val expectedTotalAmount = "6.55"
 
         val orderRepositorySlot = slot<Order>()
-        val productIdSlot = slot<UUID>()
+        val productIdSlot = mutableListOf<UUID>()
 
-        mockkStatic(UUID::class)
-        every { UUID.randomUUID() } returns orderId
         every { orderRepository.save(capture(orderRepositorySlot)) } answers { orderRepositorySlot.captured }
         every {
             productRepository.findById(capture(productIdSlot))
-        } returns createProduct().copy(id = UUID.randomUUID())
+        } returns
+            createProduct().copy(id = UUID.randomUUID()) andThen
+            createProduct().copy(id = UUID.randomUUID()) andThen
+            createProduct().copy(id = UUID.randomUUID())
 
         val output = useCase.execute(input)
 
-        assertEquals(orderId, orderRepositorySlot.captured.id)
+        assertEquals(output.orderId, orderRepositorySlot.captured.id)
         assertEquals(input.document, orderRepositorySlot.captured.document.value)
         assertEquals(input.items.size, orderRepositorySlot.captured.items.size)
-        assertEquals(orderId, orderRepositorySlot.captured.items.first().orderId)
+        assertEquals(output.orderId, orderRepositorySlot.captured.items.first().orderId)
         assertNull(orderRepositorySlot.captured.coupon)
-        assertEquals(orderId, output.orderId)
         assertEquals(expectedTotalAmount, output.totalAmount.toString())
         assertEquals(expectedTotalAmount, orderRepositorySlot.captured.totalAmount.toString())
 
@@ -74,25 +72,28 @@ class CreateOrderTest(
     @Test
     fun `should create an order when has a valid input with valid coupon`() {
         val input = createCreateOrderWithCouponInput()
-        val orderId = UUID.randomUUID()
         val expectedTotalAmount = "5.71"
         val expectedCoupon = createCoupon()
 
         val orderRepositorySlot = slot<Order>()
         val couponSlot = slot<String>()
+        val productIdSlot = mutableListOf<UUID>()
 
-        mockkStatic(UUID::class)
-        every { UUID.randomUUID() } returns orderId
         every { orderRepository.save(capture(orderRepositorySlot)) } answers { orderRepositorySlot.captured }
         every { couponRepository.findByCode(capture(couponSlot)) } returns expectedCoupon
+        every {
+            productRepository.findById(capture(productIdSlot))
+        } returns
+            createProduct().copy(id = UUID.randomUUID()) andThen
+            createProduct().copy(id = UUID.randomUUID()) andThen
+            createProduct().copy(id = UUID.randomUUID())
 
         val output = useCase.execute(input)
 
-        assertEquals(orderId, output.orderId)
-        assertEquals(orderId, orderRepositorySlot.captured.id)
+        assertEquals(output.orderId, orderRepositorySlot.captured.id)
         assertEquals(input.document, orderRepositorySlot.captured.document.value)
         assertEquals(input.items.size, orderRepositorySlot.captured.items.size)
-        assertEquals(orderId, orderRepositorySlot.captured.items.first().orderId)
+        assertEquals(output.orderId, orderRepositorySlot.captured.items.first().orderId)
         assertEquals(expectedCoupon.code, orderRepositorySlot.captured.coupon?.code)
         assertEquals(expectedTotalAmount, orderRepositorySlot.captured.totalAmount.toString())
         assertEquals(input.coupon, couponSlot.captured)
@@ -101,6 +102,7 @@ class CreateOrderTest(
         verify {
             orderRepository.save(orderRepositorySlot.captured)
             couponRepository.findByCode(couponSlot.captured)
+            productRepository.findById(capture(productIdSlot))
         }
     }
 
@@ -108,10 +110,13 @@ class CreateOrderTest(
     fun `should throw exception when has a invalid coupon`() {
         val input = createCreateOrderWithCouponInput()
         val couponSlot = slot<String>()
-        val orderId = UUID.randomUUID()
 
-        mockkStatic(UUID::class)
-        every { UUID.randomUUID() } returns orderId
+        every {
+            productRepository.findById(any())
+        } returns
+            createProduct().copy(id = UUID.randomUUID()) andThen
+            createProduct().copy(id = UUID.randomUUID()) andThen
+            createProduct().copy(id = UUID.randomUUID())
         every { couponRepository.findByCode(capture(couponSlot)) } throws IllegalArgumentException()
 
         assertThrows<IllegalArgumentException> { useCase.execute(input) }.run {
@@ -119,6 +124,7 @@ class CreateOrderTest(
         }
 
         verify {
+            productRepository.findById(any())
             couponRepository.findByCode(couponSlot.captured)
         }
     }
@@ -128,10 +134,13 @@ class CreateOrderTest(
         val input = createCreateOrderWithCouponInput()
         val expiredCoupon = createExpiredCoupon()
         val couponSlot = slot<String>()
-        val orderId = UUID.randomUUID()
 
-        mockkStatic(UUID::class)
-        every { UUID.randomUUID() } returns orderId
+        every {
+            productRepository.findById(any())
+        } returns
+            createProduct().copy(id = UUID.randomUUID()) andThen
+            createProduct().copy(id = UUID.randomUUID()) andThen
+            createProduct().copy(id = UUID.randomUUID())
         every { couponRepository.findByCode(capture(couponSlot)) } returns expiredCoupon
 
         assertThrows<IllegalArgumentException> { useCase.execute(input) }.run {
@@ -140,6 +149,7 @@ class CreateOrderTest(
         }
 
         verify {
+            productRepository.findById(any())
             couponRepository.findByCode(couponSlot.captured)
         }
     }

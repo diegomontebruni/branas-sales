@@ -3,6 +3,7 @@ package com.montebruni.sales.domain.entity
 import com.montebruni.sales.fixture.createOrder
 import com.montebruni.sales.fixture.createOrderItem
 import com.montebruni.sales.fixture.createOrderWithCoupon
+import com.montebruni.sales.fixture.createProduct
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -32,8 +33,8 @@ class OrderTests {
         val duplicatedId = UUID.randomUUID()
 
         assertThrows<IllegalArgumentException> { order.copy(items = listOf(
-            createOrderItem().copy(id = duplicatedId),
-            createOrderItem().copy(id = duplicatedId),
+            createOrderItem().copy(product = createProduct().copy(id = duplicatedId)),
+            createOrderItem().copy(product = createProduct().copy(id = duplicatedId)),
             createOrderItem(),
             createOrderItem()
         )) }.let {

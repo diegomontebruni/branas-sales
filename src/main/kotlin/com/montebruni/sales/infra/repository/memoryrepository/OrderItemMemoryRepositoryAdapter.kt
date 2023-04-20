@@ -8,26 +8,25 @@ import com.montebruni.sales.extensions.repository.memoryrepository.toProduct
 import com.montebruni.sales.infra.repository.memoryrepository.model.ProductMemoryRepositoryModel
 import com.montebruni.sales.infra.repository.memoryrepository.port.OrderItemMemoryRepository
 import com.montebruni.sales.infra.repository.memoryrepository.port.ProductMemoryRepository
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
 class OrderItemMemoryRepositoryAdapter(
-    private val orderItemMemoryRepositoryImpl: OrderItemMemoryRepository,
-    @Autowired private val productMemoryRepository: ProductMemoryRepository
+    private val orderItemMemoryRepository: OrderItemMemoryRepository,
+    private val productMemoryRepository: ProductMemoryRepository
 ) : OrderItemRepository {
 
     override fun save(orderItem: OrderItem): OrderItem =
-        orderItemMemoryRepositoryImpl.save(orderItem.toOrderItemMemoryRepositoryModel()).let { orderItem }
+        orderItemMemoryRepository.save(orderItem.toOrderItemMemoryRepositoryModel()).let { orderItem }
 
     override fun findById(id: UUID): OrderItem =
-        orderItemMemoryRepositoryImpl.findById(id)?.let {
+        orderItemMemoryRepository.findById(id)?.let {
             it.toOrderItem(product = findProductById(it.productId).toProduct())
         } ?: throw IllegalArgumentException("Invalid item")
 
     override fun findByOrderId(orderId: UUID): List<OrderItem> =
-        orderItemMemoryRepositoryImpl.findByOrderId(orderId = orderId).map {
+        orderItemMemoryRepository.findByOrderId(orderId = orderId).map {
             it.toOrderItem(product = findProductById(it.productId).toProduct())
         }
 
