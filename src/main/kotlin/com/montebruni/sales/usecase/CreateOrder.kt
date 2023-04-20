@@ -26,7 +26,7 @@ class CreateOrder(
     fun execute(input: CreateOrderInput) : CreateOrderOutput {
         logger.info { "Creating order for document: ${input.document}" }
 
-        val orderId = UUID.randomUUID()
+        val orderId = Order.generateId()
         val savedOrder = orderRepository.save(createOrderFromInput(input, orderId))
 
         logger.info { "Created order with id: $orderId" }
