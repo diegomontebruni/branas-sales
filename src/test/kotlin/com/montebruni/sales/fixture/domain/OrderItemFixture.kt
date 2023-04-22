@@ -1,4 +1,4 @@
-package com.montebruni.sales.fixture
+package com.montebruni.sales.fixture.domain
 
 import com.montebruni.sales.domain.entity.OrderItem
 import com.montebruni.sales.domain.valueobjects.Amount
