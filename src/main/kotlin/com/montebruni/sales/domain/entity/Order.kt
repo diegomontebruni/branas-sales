@@ -18,15 +18,15 @@ data class Order(
         calculateTotal()
     }
 
-    companion object {
-        fun generateId(): UUID = UUID.randomUUID()
-    }
-
     private fun hasDuplicatedItems(): Boolean = items.groupingBy { it.product.id }.eachCount().any { it.value > 1}
 
     private fun calculateTotal() {
         totalAmount = items.sumOf { it.calculateTotalAmount().value }.toAmount().let {
             coupon?.calculateDiscount(it) ?: it
         }
+    }
+
+    companion object {
+        fun generateId(): UUID = UUID.randomUUID()
     }
 }
