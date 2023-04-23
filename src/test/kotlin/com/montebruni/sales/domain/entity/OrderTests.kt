@@ -1,9 +1,9 @@
 package com.montebruni.sales.domain.entity
 
-import com.montebruni.sales.fixture.createOrder
-import com.montebruni.sales.fixture.createOrderItem
-import com.montebruni.sales.fixture.createOrderWithCoupon
-import com.montebruni.sales.fixture.createProduct
+import com.montebruni.sales.fixture.domain.createOrder
+import com.montebruni.sales.fixture.domain.createOrderItem
+import com.montebruni.sales.fixture.domain.createOrderWithCoupon
+import com.montebruni.sales.fixture.domain.createProduct
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
