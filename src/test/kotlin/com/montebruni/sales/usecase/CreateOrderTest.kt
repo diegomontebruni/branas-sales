@@ -5,9 +5,9 @@ import com.montebruni.sales.domain.entity.Order
 import com.montebruni.sales.domain.port.CouponRepository
 import com.montebruni.sales.domain.port.OrderRepository
 import com.montebruni.sales.domain.port.ProductRepository
-import com.montebruni.sales.fixture.createCoupon
-import com.montebruni.sales.fixture.createExpiredCoupon
-import com.montebruni.sales.fixture.createProduct
+import com.montebruni.sales.fixture.domain.createCoupon
+import com.montebruni.sales.fixture.domain.createExpiredCoupon
+import com.montebruni.sales.fixture.domain.createProduct
 import com.montebruni.sales.fixture.usecase.createCreateOrderInput
 import com.montebruni.sales.fixture.usecase.createCreateOrderWithCouponInput
 import io.mockk.confirmVerified

@@ -1,7 +1,7 @@
 package com.montebruni.sales.infra.repository.memoryrepository
 
 import com.montebruni.sales.common.UnitTests
-import com.montebruni.sales.fixture.createOrder
+import com.montebruni.sales.fixture.domain.createOrder
 import com.montebruni.sales.fixture.infra.repository.memoryrepository.createOrderMemoryRepositoryModel
 import com.montebruni.sales.infra.repository.memoryrepository.model.OrderMemoryRepositoryModel
 import com.montebruni.sales.infra.repository.memoryrepository.port.OrderMemoryRepository

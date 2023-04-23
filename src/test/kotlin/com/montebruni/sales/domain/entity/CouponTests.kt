@@ -1,8 +1,8 @@
 package com.montebruni.sales.domain.entity
 
 import com.montebruni.sales.domain.valueobjects.Amount
-import com.montebruni.sales.fixture.createCoupon
-import com.montebruni.sales.fixture.createExpiredCoupon
+import com.montebruni.sales.fixture.domain.createCoupon
+import com.montebruni.sales.fixture.domain.createExpiredCoupon
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Test
