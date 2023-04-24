@@ -1,10 +1,10 @@
 package com.montebruni.sales.domain.freightCalculator
 
 import com.montebruni.sales.common.UnitTests
-import com.montebruni.sales.domain.entity.freightCalculator.FreightCalculator
-import com.montebruni.sales.domain.entity.freightCalculator.handle.VolumeFreightCalculator
-import com.montebruni.sales.domain.entity.freightCalculator.input.FreightCalculatorInput
-import com.montebruni.sales.fixture.domain.freightCalculator.createFreightCalculatorInput
+import com.montebruni.sales.fixture.domain.createFreight
+import com.montebruni.sales.resource.calculator.freightCalculator.FreightCalculatorAdapter
+import com.montebruni.sales.resource.calculator.freightCalculator.handle.VolumeFreightCalculator
+import com.montebruni.sales.resource.calculator.freightCalculator.input.FreightCalculatorInput
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -18,11 +18,11 @@ class FreightCalculatorTest(
 ) : UnitTests() {
 
     @InjectMockKs
-    private lateinit var freightCalculator: FreightCalculator
+    private lateinit var freightCalculator: FreightCalculatorAdapter
 
     @Test
     fun `should calculate a freight with 2 decimal places when given a valid input`() {
-        val input = createFreightCalculatorInput()
+        val input = createFreight()
         val expectedOutput = 10.0
 
         val handleSlot = slot<FreightCalculatorInput>()
@@ -38,7 +38,7 @@ class FreightCalculatorTest(
 
     @Test
     fun `should calculate a freight with 2 decimal places when output has more than 2 decimal places`() {
-        val input = createFreightCalculatorInput()
+        val input = createFreight()
         val expectedHandleOutput = 10.99999
         val expectedOutput = 10.99
 

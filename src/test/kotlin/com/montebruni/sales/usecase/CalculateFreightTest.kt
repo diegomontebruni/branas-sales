@@ -1,8 +1,9 @@
 package com.montebruni.sales.usecase
 
+import com.montebruni.sales.usecase.CalculateFreight
 import com.montebruni.sales.common.UnitTests
-import com.montebruni.sales.domain.entity.freightCalculator.FreightCalculator
-import com.montebruni.sales.domain.entity.freightCalculator.input.FreightCalculatorInput
+import com.montebruni.sales.domain.entity.Freight
+import com.montebruni.sales.domain.port.FreightCalculator
 import com.montebruni.sales.fixture.usecase.createCalculateFreightInput
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -26,7 +27,7 @@ class CalculateFreightTest(
         val guitarFreight = 30.0
         val refrigeratorFreight = 400.0
 
-        val freightSlot = mutableListOf<FreightCalculatorInput>()
+        val freightSlot = mutableListOf<Freight>()
 
         every { freightCalculator.calculate(capture(freightSlot)) } returns
             camFreight andThen guitarFreight andThen refrigeratorFreight

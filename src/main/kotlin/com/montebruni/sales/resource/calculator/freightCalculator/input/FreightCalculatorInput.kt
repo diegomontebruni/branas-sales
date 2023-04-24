@@ -1,4 +1,4 @@
-package com.montebruni.sales.domain.entity.freightCalculator.input
+package com.montebruni.sales.resource.calculator.freightCalculator.input
 
 data class FreightCalculatorInput(
     val height: Double,
