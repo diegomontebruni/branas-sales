@@ -26,7 +26,9 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("io.github.microutils:kotlin-logging-jvm:${kotlinLoggingVersion}")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.boot:spring-boot-starter-test") {
+		exclude("org.mockito")
+	}
 	testImplementation("io.mockk:mockk:${mockkVersion}")
 	testImplementation("com.ninja-squad:springmockk:${springMockkVersion}")
 }

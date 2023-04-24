@@ -1,22 +1,21 @@
 package com.montebruni.sales.usecase
 
-import com.montebruni.sales.usecase.CalculateFreight
 import com.montebruni.sales.common.UnitTests
 import com.montebruni.sales.domain.entity.Freight
 import com.montebruni.sales.domain.port.FreightCalculator
 import com.montebruni.sales.fixture.usecase.createCalculateFreightInput
 import io.mockk.every
+import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.mockito.InjectMocks
 
 class CalculateFreightTest(
-    @MockK private val freightCalculator: FreightCalculator
+    @MockK private val freightCalculator: FreightCalculator,
 ) : UnitTests() {
 
-    @InjectMocks
+    @InjectMockKs
     private lateinit var useCase: CalculateFreight
 
     @Test
