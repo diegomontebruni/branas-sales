@@ -22,8 +22,8 @@ class OrderController(
 ) {
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
-    fun createOrder(@RequestBody body: CreateOrderRequest): CreateOrderResponse =
+    @PostMapping("/checkout")
+    fun checkout(@RequestBody body: CreateOrderRequest): CreateOrderResponse =
         createOrder.execute(body.toCreateOrderInput()).let {
             CreateOrderResponse(
                 orderId = it.orderId,
