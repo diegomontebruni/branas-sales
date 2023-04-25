@@ -1,4 +1,4 @@
-package com.montebruni.sales.domain.valueobjects
+package com.montebruni.sales.application.domain.valueobjects
 
 import com.montebruni.sales.application.domain.valueobjects.PositiveDouble
 import org.junit.jupiter.api.Test

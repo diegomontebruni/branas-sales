@@ -1,4 +1,4 @@
-package com.montebruni.sales.domain.entity
+package com.montebruni.sales.application.domain.entity
 
 import com.montebruni.sales.application.domain.valueobjects.Amount
 import com.montebruni.sales.fixture.domain.createCoupon

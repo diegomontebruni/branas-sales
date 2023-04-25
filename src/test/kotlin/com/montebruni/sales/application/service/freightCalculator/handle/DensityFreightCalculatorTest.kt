@@ -1,4 +1,4 @@
-package com.montebruni.sales.domain.freightCalculator.handle
+package com.montebruni.sales.application.service.freightCalculator.handle
 
 import com.montebruni.sales.common.UnitTests
 import com.montebruni.sales.application.service.freightCalculator.handle.DensityFreightCalculator

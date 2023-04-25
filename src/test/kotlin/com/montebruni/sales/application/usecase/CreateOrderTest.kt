@@ -1,4 +1,4 @@
-package com.montebruni.sales.usecase
+package com.montebruni.sales.application.usecase
 
 import com.montebruni.sales.common.UnitTests
 import com.montebruni.sales.application.domain.entity.Order

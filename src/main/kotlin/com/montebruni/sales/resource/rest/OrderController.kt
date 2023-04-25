@@ -7,6 +7,7 @@ import com.montebruni.sales.resource.rest.request.toCreateOrderInput
 import com.montebruni.sales.resource.rest.response.CreateOrderResponse
 import com.montebruni.sales.application.usecase.CalculateFreight
 import com.montebruni.sales.application.usecase.CreateOrder
+import com.montebruni.sales.resource.rest.response.CalculateFreightResponse
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -33,6 +34,8 @@ class OrderController(
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/calculate-freight")
-    fun calculateFreight(@RequestBody body: CalculateFreightRequest): Double =
-        calculateFreight.execute(body.toCalculateFreightInput())
+    fun calculateFreight(@RequestBody body: CalculateFreightRequest): CalculateFreightResponse =
+        CalculateFreightResponse(
+            freightAmount = calculateFreight.execute(body.toCalculateFreightInput())
+        )
 }
