@@ -1,7 +1,7 @@
 package com.montebruni.sales.resource.rest.request
 
-import com.montebruni.sales.domain.valueobjects.PositiveDouble
-import com.montebruni.sales.usecase.input.CalculateFreightInput
+import com.montebruni.sales.application.domain.valueobjects.PositiveDouble
+import com.montebruni.sales.application.usecase.input.CalculateFreightInput
 
 data class CalculateFreightRequest(
     val items: List<ItemRequest>

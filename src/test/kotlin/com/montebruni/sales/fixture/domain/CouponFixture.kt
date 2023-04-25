@@ -1,6 +1,6 @@
 package com.montebruni.sales.fixture.domain
 
-import com.montebruni.sales.domain.entity.Coupon
+import com.montebruni.sales.application.domain.entity.Coupon
 import java.time.Instant
 
 fun createCoupon() = Coupon(

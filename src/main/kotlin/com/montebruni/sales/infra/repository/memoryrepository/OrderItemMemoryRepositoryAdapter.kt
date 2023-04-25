@@ -1,7 +1,7 @@
 package com.montebruni.sales.infra.repository.memoryrepository
 
-import com.montebruni.sales.domain.entity.OrderItem
-import com.montebruni.sales.domain.port.OrderItemRepository
+import com.montebruni.sales.application.domain.entity.OrderItem
+import com.montebruni.sales.application.domain.port.OrderItemRepository
 import com.montebruni.sales.extensions.domain.entity.toOrderItemMemoryRepositoryModel
 import com.montebruni.sales.extensions.repository.memoryrepository.toOrderItem
 import com.montebruni.sales.extensions.repository.memoryrepository.toProduct

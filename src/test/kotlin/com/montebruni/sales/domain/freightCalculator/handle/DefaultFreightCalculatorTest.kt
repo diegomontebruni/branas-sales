@@ -1,7 +1,7 @@
 package com.montebruni.sales.domain.freightCalculator.handle
 
 import com.montebruni.sales.common.UnitTests
-import com.montebruni.sales.resource.calculator.freightCalculator.handle.DefaultFreightCalculator
+import com.montebruni.sales.application.service.freightCalculator.handle.DefaultFreightCalculator
 import com.montebruni.sales.fixture.resource.calculator.freightCalculator.createFreightCalculatorInput
 import io.mockk.impl.annotations.InjectMockKs
 import org.junit.jupiter.api.Assertions.assertEquals

@@ -1,7 +1,7 @@
 package com.montebruni.sales.fixture.domain
 
-import com.montebruni.sales.domain.entity.Product
-import com.montebruni.sales.domain.valueobjects.PositiveDouble
+import com.montebruni.sales.application.domain.entity.Product
+import com.montebruni.sales.application.domain.valueobjects.PositiveDouble
 import java.util.*
 
 fun createProduct() = Product(

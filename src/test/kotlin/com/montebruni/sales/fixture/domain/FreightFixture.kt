@@ -1,6 +1,6 @@
 package com.montebruni.sales.fixture.domain
 
-import com.montebruni.sales.domain.entity.Freight
+import com.montebruni.sales.application.domain.entity.Freight
 import com.montebruni.sales.extensions.toPositiveDouble
 
 fun createFreight() = Freight(

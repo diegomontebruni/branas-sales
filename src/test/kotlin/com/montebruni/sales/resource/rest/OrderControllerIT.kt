@@ -3,9 +3,9 @@ package com.montebruni.sales.resource.rest
 import com.montebruni.sales.common.rest.BaseRestIT
 import com.montebruni.sales.fixture.resource.rest.createOrderRequest
 import com.montebruni.sales.fixture.usecase.createCreateOrderOutput
-import com.montebruni.sales.usecase.CalculateFreight
-import com.montebruni.sales.usecase.CreateOrder
-import com.montebruni.sales.usecase.input.CreateOrderInput
+import com.montebruni.sales.application.usecase.CalculateFreight
+import com.montebruni.sales.application.usecase.CreateOrder
+import com.montebruni.sales.application.usecase.input.CreateOrderInput
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.confirmVerified
 import io.mockk.every

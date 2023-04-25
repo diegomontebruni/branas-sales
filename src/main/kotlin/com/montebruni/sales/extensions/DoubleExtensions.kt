@@ -1,6 +1,6 @@
 package com.montebruni.sales.extensions
 
-import com.montebruni.sales.domain.valueobjects.PositiveDouble
+import com.montebruni.sales.application.domain.valueobjects.PositiveDouble
 import java.math.BigDecimal
 import java.math.RoundingMode
 

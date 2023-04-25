@@ -1,5 +1,6 @@
 package com.montebruni.sales.domain.valueobjects
 
+import com.montebruni.sales.application.domain.valueobjects.Amount
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

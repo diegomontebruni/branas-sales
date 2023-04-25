@@ -1,6 +1,6 @@
 package com.montebruni.sales.fixture.resource.calculator.freightCalculator
 
-import com.montebruni.sales.resource.calculator.freightCalculator.input.FreightCalculatorInput
+import com.montebruni.sales.application.service.freightCalculator.FreightCalculatorInput
 
 fun createFreightCalculatorInput() = FreightCalculatorInput(
     width = 20.0,

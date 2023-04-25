@@ -1,7 +1,7 @@
 package com.montebruni.sales.fixture.domain
 
-import com.montebruni.sales.domain.entity.Order
-import com.montebruni.sales.domain.valueobjects.Document
+import com.montebruni.sales.application.domain.entity.Order
+import com.montebruni.sales.application.domain.valueobjects.Document
 
 fun createOrder() = Order(
     id = Order.generateId(),

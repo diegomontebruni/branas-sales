@@ -1,7 +1,7 @@
 package com.montebruni.sales.fixture.usecase
 
-import com.montebruni.sales.usecase.input.CreateOrderInput
-import com.montebruni.sales.usecase.output.CreateOrderOutput
+import com.montebruni.sales.application.usecase.input.CreateOrderInput
+import com.montebruni.sales.application.usecase.output.CreateOrderOutput
 import java.util.*
 
 fun createCreateOrderInput() = CreateOrderInput(

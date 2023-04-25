@@ -1,6 +1,6 @@
 package com.montebruni.sales.resource.rest.request
 
-import com.montebruni.sales.usecase.input.CreateOrderInput
+import com.montebruni.sales.application.usecase.input.CreateOrderInput
 import java.util.*
 
 data class CreateOrderRequest(

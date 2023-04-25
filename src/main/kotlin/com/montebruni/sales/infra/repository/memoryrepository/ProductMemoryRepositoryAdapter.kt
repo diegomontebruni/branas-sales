@@ -1,7 +1,7 @@
 package com.montebruni.sales.infra.repository.memoryrepository
 
-import com.montebruni.sales.domain.entity.Product
-import com.montebruni.sales.domain.port.ProductRepository
+import com.montebruni.sales.application.domain.entity.Product
+import com.montebruni.sales.application.domain.port.ProductRepository
 import com.montebruni.sales.extensions.repository.memoryrepository.toProduct
 import com.montebruni.sales.infra.repository.memoryrepository.port.ProductMemoryRepository
 import org.springframework.beans.factory.annotation.Autowired
