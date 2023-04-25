@@ -6,7 +6,7 @@ import java.util.*
 fun createOrderItemMemoryRepositoryModel() = OrderItemMemoryRepositoryModel(
     id = UUID.randomUUID(),
     orderId = UUID.randomUUID(),
-    description = "Order item model",
+    productId = UUID.randomUUID(),
     price = 10.00,
     quantity = 10
 )

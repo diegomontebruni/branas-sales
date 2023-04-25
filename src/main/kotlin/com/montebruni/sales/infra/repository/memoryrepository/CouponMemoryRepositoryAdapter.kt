@@ -1,7 +1,7 @@
 package com.montebruni.sales.infra.repository.memoryrepository
 
-import com.montebruni.sales.domain.entity.Coupon
-import com.montebruni.sales.domain.port.CouponRepository
+import com.montebruni.sales.application.domain.entity.Coupon
+import com.montebruni.sales.application.domain.port.CouponRepository
 import com.montebruni.sales.extensions.repository.memoryrepository.toCoupon
 import com.montebruni.sales.infra.repository.memoryrepository.port.CouponMemoryRepository
 import org.springframework.stereotype.Component
