@@ -59,7 +59,7 @@ class OrderControllerIT : BaseRestIT() {
                     .content(mapper.writeValueAsString(request))
             )
                 .andExpect(status().is2xxSuccessful)
-                .andExpect(jsonPath("order_id").value(expectedOutput.orderId.toString()))
+                .andExpect(jsonPath("order_number").value(expectedOutput.orderNumber))
                 .andExpect(jsonPath("total_amount").value(expectedOutput.totalAmount.toString()))
                 .run {
                     assertEquals(request.document, useCaseSlot.captured.document)

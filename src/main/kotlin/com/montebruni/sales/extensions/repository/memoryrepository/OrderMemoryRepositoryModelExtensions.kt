@@ -6,11 +6,13 @@ import com.montebruni.sales.application.domain.entity.Order
 import com.montebruni.sales.application.domain.entity.OrderItem
 import com.montebruni.sales.application.domain.valueobjects.Amount
 import com.montebruni.sales.application.domain.valueobjects.Document
+import com.montebruni.sales.application.domain.valueobjects.OrderNumber
 
 fun OrderMemoryRepositoryModel.toOrder(items: List<OrderItem>, coupon: Coupon) = Order(
     id = id,
     document = Document(document),
     totalAmount = Amount(totalAmount),
     items = items,
-    coupon = coupon
+    coupon = coupon,
+    orderNumber = OrderNumber(orderNumber)
 )

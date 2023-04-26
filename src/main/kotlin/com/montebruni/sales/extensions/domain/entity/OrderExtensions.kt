@@ -7,5 +7,6 @@ fun Order.toOrderMemoryRepositoryModel() = OrderMemoryRepositoryModel(
     id = id,
     document = document.value,
     totalAmount = totalAmount.value.toDouble(),
-    couponCode = coupon?.code
+    couponCode = coupon?.code,
+    orderNumber = orderNumber.value
 )

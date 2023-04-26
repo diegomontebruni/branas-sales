@@ -1,5 +1,6 @@
 package com.montebruni.sales.fixture.usecase
 
+import com.montebruni.sales.application.domain.valueobjects.OrderNumber
 import com.montebruni.sales.application.usecase.input.CreateOrderInput
 import com.montebruni.sales.application.usecase.output.CreateOrderOutput
 import java.util.*
@@ -24,6 +25,6 @@ fun createCreateOrderWithCouponInput() = CreateOrderInput(
 )
 
 fun createCreateOrderOutput() = CreateOrderOutput(
-    orderId = UUID.randomUUID(),
+    orderNumber = OrderNumber().value,
     totalAmount = 1.0
 )

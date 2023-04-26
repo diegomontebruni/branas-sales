@@ -27,7 +27,7 @@ class OrderController(
     fun checkout(@RequestBody body: CreateOrderRequest): CreateOrderResponse =
         createOrder.execute(body.toCreateOrderInput()).let {
             CreateOrderResponse(
-                orderId = it.orderId,
+                orderNumber = it.orderNumber,
                 totalAmount = it.totalAmount
             )
         }
