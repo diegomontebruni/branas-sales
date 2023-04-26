@@ -10,4 +10,5 @@ class OrderMemoryRepositoryImpl : OrderMemoryRepository {
     private val orders: MutableList<OrderMemoryRepositoryModel> = mutableListOf()
 
     override fun save(order: OrderMemoryRepositoryModel): OrderMemoryRepositoryModel = orders.add(order).let { order }
+    override fun getLastOrderNumber(): String? = orders.lastOrNull()?.orderNumber
 }
