@@ -15,4 +15,5 @@ data class Coupon(
 
     fun calculateDiscount(totalAmount: Amount): Amount = totalAmount.percentage(percentage)
     fun isValid(): Boolean = expirationAt.isAfter(Instant.now())
+    fun throwIfExpired(): Coupon = if (!isValid()) throw IllegalArgumentException("Expired coupon") else this
 }

@@ -44,7 +44,7 @@ class CreateOrder(
             orderNumber = orderRepository.getLastOrderNumber()?.let { OrderNumber(it).increment() } ?: OrderNumber(),
             document = Document(input.document),
             items = input.items.map { createItemFromInput(it, orderId) },
-            coupon = input.coupon?.let { findCoupon(it) }
+            coupon = input.coupon?.let { couponRepository.findByCode(it).throwIfExpired() }
         )
     }
 
@@ -54,11 +54,6 @@ class CreateOrder(
         price = Amount(input.price),
         quantity = input.quantity
     )
-
-    private fun findCoupon(couponCode: String): Coupon = couponRepository.findByCode(couponCode).let {
-        if (it.isValid()) return it
-        throw IllegalArgumentException("Expired coupon")
-    }
 
     companion object {
         val logger = KotlinLogging.logger { }
