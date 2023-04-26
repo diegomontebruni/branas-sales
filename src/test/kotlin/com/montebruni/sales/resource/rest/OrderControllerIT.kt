@@ -38,12 +38,13 @@ class OrderControllerIT : BaseRestIT() {
 
     @AfterEach
     internal fun tearDown() {
-        confirmVerified(createOrder)
+        confirmVerified(createOrder, calculateFreight)
     }
 
     @Nested
     @DisplayName("checkout test")
     inner class CheckoutTestCases {
+
         @Test
         fun `should return output when creation is successfully`() {
             val request = createOrderRequest()
@@ -74,6 +75,7 @@ class OrderControllerIT : BaseRestIT() {
     @Nested
     @DisplayName("freight calculator")
     inner class FreightCalculatorTestCases {
+
         @Test
         fun `should return double when creation is successfully`() {
             val request = createCalculateFreightRequest()

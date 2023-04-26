@@ -1,6 +1,5 @@
 package com.montebruni.sales.application.usecase
 
-import com.montebruni.sales.application.domain.entity.Coupon
 import com.montebruni.sales.application.domain.entity.Order
 import com.montebruni.sales.application.domain.entity.OrderItem
 import com.montebruni.sales.application.domain.port.CouponRepository
