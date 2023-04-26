@@ -13,20 +13,18 @@ class OrderNumberTests {
 
     @Test
     fun `should create an order number with empty input value`() {
-        val orderNumber = OrderNumber()
-
-        assertEquals("${year}00000000", orderNumber.value)
+        assertEquals("${year}00000000", OrderNumber().value)
     }
 
     @ParameterizedTest
     @ValueSource(strings = ["202300000001", "202300000002", "202311111111"])
-    fun `should create an order number when has a last code`(lastCode: String) {
-        assertEquals(lastCode.toLong().inc().toString(), OrderNumber(lastCode).value)
+    fun `should increment an order number when has a last code`(lastCode: String) {
+        assertEquals(lastCode.toLong().inc().toString(), OrderNumber(lastCode).increment().value)
     }
 
     @Test
     fun `should throw exception when has a invalid last order number`() {
-        val lasCode = "2023000000A0"
-        assertThrows<IllegalArgumentException> { OrderNumber(lasCode) }
+        val lastCode = "2023000000A0"
+        assertThrows<IllegalArgumentException> { OrderNumber(lastCode).increment() }
     }
 }

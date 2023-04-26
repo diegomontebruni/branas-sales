@@ -2,24 +2,27 @@ package com.montebruni.sales.application.domain.valueobjects
 
 import java.time.Year
 
-data class OrderNumber(var value: String? = null) {
+data class OrderNumber(var value: String) {
+
+    constructor(): this(generateCode())
 
     init {
-        value = generateCode()
         if (!isValidCode()) throw IllegalArgumentException("Invalid code")
     }
 
-    private fun isValidCode(): Boolean = value!!.matches("""^\d{4}\d{8}$""".toRegex())
-
-    private fun generateCode(): String {
-        val year = Year.now().value
-
-        if (value.isNullOrEmpty()) return "${year}${0.toString().repeat(8)}"
-
-        val lastOrderNumber = value!!.replace("^.*(?=.{8})".toRegex(), "")
+    fun increment(): OrderNumber {
+        val lastOrderNumber = value.replace("^.*(?=.{8})".toRegex(), "")
         val increasedOrderNumber = lastOrderNumber.toLongOrNull()?.inc()
             ?: throw IllegalArgumentException("Invalid last order number")
 
-        return "${year}${increasedOrderNumber.toString().padStart(8, '0')}"
+        value = "${Year.now().value}${increasedOrderNumber.toString().padStart(8, '0')}"
+
+        return this
+    }
+
+    private fun isValidCode(): Boolean = value.matches("""^\d{4}\d{8}$""".toRegex())
+
+    companion object {
+        private fun generateCode(): String = "${Year.now().value}${0.toString().repeat(8)}"
     }
 }
