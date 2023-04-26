@@ -18,6 +18,5 @@ class FreightCalculatorAdapter : FreightCalculator {
         width = input.width.value,
         length = input.length.value,
         weight = input.weight.value
-    )
-    ).toDecimal()
+    )).toDecimal()
 }
