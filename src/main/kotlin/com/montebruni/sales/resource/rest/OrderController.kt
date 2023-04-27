@@ -56,7 +56,7 @@ class OrderController(
         ]
     )
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/calculate-freight")
+    @PostMapping("/simulate-freight")
     fun calculateFreight(@RequestBody body: CalculateFreightRequest): CalculateFreightResponse =
         CalculateFreightResponse(
             freightAmount = calculateFreight.execute(body.toCalculateFreightInput())
