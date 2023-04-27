@@ -14,6 +14,8 @@ java.sourceCompatibility = JavaVersion.VERSION_17
 val mockkVersion = "1.13.4"
 val kotlinLoggingVersion = "3.0.5"
 val springMockkVersion = "3.1.2"
+val swaggerVersion = "3.0.0"
+val swaggerUIVersion = "3.0.0"
 
 repositories {
 	mavenCentral()
@@ -24,7 +26,9 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("io.github.microutils:kotlin-logging-jvm:${kotlinLoggingVersion}")
+	implementation("io.github.microutils:kotlin-logging-jvm:$kotlinLoggingVersion")
+	implementation("io.springfox:springfox-swagger2:$swaggerVersion")
+	implementation("io.springfox:springfox-swagger-ui:$swaggerUIVersion")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude("org.mockito")
