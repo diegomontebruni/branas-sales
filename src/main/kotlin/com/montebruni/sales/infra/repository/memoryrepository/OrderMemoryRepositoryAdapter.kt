@@ -15,4 +15,8 @@ class OrderMemoryRepositoryAdapter(
         orderMemoryRepository.save(order.toOrderMemoryRepositoryModel()).let { order }
 
     override fun getLastOrderNumber(): String? = orderMemoryRepository.getLastOrderNumber()
+
+    override fun findByOrderNumber(orderNumber: String): Order {
+        TODO("Not yet implemented")
+    }
 }

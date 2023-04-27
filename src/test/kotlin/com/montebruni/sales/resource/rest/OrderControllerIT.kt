@@ -86,7 +86,7 @@ class OrderControllerIT : BaseRestIT() {
             every { calculateFreight.execute(capture(useCaseSlot)) } returns expectedOutput
 
             mockMvc.perform(
-                post("$baseUrl/calculate-freight")
+                post("$baseUrl/simulate-freight")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(mapper.writeValueAsString(request))
             )
