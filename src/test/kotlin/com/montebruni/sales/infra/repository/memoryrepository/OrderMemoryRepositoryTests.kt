@@ -6,6 +6,7 @@ import com.montebruni.sales.fixture.infra.repository.memoryrepository.createOrde
 import com.montebruni.sales.infra.repository.memoryrepository.impl.OrderMemoryRepositoryImpl
 import io.mockk.impl.annotations.InjectMockKs
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -34,8 +35,7 @@ class OrderMemoryRepositoryTests : UnitTests() {
             val ordersModel = listOf(
                 createOrderMemoryRepositoryModel(),
                 createOrderMemoryRepositoryModel().copy(orderNumber = OrderNumber().increment().value)
-            )
-            ordersModel.forEach { orderMemoryRepositoryImpl.save(it) }
+            ).onEach { orderMemoryRepositoryImpl.save(it) }
 
             val lastOrderNumber = orderMemoryRepositoryImpl.getLastOrderNumber()
 
@@ -45,6 +45,38 @@ class OrderMemoryRepositoryTests : UnitTests() {
         @Test
         fun `should return null when has a empty list`() {
             assertNull(orderMemoryRepositoryImpl.getLastOrderNumber())
+        }
+    }
+
+    @Nested
+    @DisplayName("FindByOrderNumber")
+    inner class FindByOrderNumberTestCases {
+
+        @Test
+        fun `should get order model when has a valid order number`() {
+            val ordersModel = listOf(
+                createOrderMemoryRepositoryModel(),
+                createOrderMemoryRepositoryModel().copy(orderNumber = OrderNumber().increment().value)
+            ).onEach { orderMemoryRepositoryImpl.save(it) }
+
+            val order = orderMemoryRepositoryImpl.findByOrderNumber(ordersModel.last().orderNumber)
+
+            assertNotNull(order)
+            assertEquals(ordersModel.last().id, order!!.id)
+        }
+
+        @Test
+        fun `should return null when has an invalid order number`() {
+            val orderNumber = "123"
+
+            listOf(
+                createOrderMemoryRepositoryModel(),
+                createOrderMemoryRepositoryModel().copy(orderNumber = OrderNumber().increment().value)
+            ).onEach { orderMemoryRepositoryImpl.save(it) }
+
+            val order = orderMemoryRepositoryImpl.findByOrderNumber(orderNumber)
+
+            assertNull(order)
         }
     }
 }

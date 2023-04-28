@@ -8,7 +8,7 @@ import com.montebruni.sales.application.domain.valueobjects.Amount
 import com.montebruni.sales.application.domain.valueobjects.Document
 import com.montebruni.sales.application.domain.valueobjects.OrderNumber
 
-fun OrderMemoryRepositoryModel.toOrder(items: List<OrderItem>, coupon: Coupon) = Order(
+fun OrderMemoryRepositoryModel.toOrder(items: List<OrderItem>, coupon: Coupon?) = Order(
     id = id,
     document = Document(document),
     totalAmount = Amount(totalAmount),

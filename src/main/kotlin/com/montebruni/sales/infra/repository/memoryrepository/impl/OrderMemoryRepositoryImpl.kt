@@ -11,4 +11,7 @@ class OrderMemoryRepositoryImpl : OrderMemoryRepository {
 
     override fun save(order: OrderMemoryRepositoryModel): OrderMemoryRepositoryModel = orders.add(order).let { order }
     override fun getLastOrderNumber(): String? = orders.lastOrNull()?.orderNumber
+    override fun findByOrderNumber(orderNumber: String): OrderMemoryRepositoryModel? = orders.find {
+        it.orderNumber == orderNumber
+    }
 }

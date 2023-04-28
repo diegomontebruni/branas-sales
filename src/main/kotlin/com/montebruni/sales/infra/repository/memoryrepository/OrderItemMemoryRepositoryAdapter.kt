@@ -22,12 +22,12 @@ class OrderItemMemoryRepositoryAdapter(
 
     override fun findById(id: UUID): OrderItem =
         orderItemMemoryRepository.findById(id)?.let {
-            it.toOrderItem(product = findProductById(it.productId).toProduct())
+            it.toOrderItem(product = findProductById(it.productId))
         } ?: throw IllegalArgumentException("Invalid item")
 
     override fun findByOrderId(orderId: UUID): List<OrderItem> =
         orderItemMemoryRepository.findByOrderId(orderId = orderId).map {
-            it.toOrderItem(product = findProductById(it.productId).toProduct())
+            it.toOrderItem(product = findProductById(it.productId))
         }
 
     private fun findProductById(id: UUID): ProductMemoryRepositoryModel =

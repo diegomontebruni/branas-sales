@@ -10,3 +10,11 @@ fun createOrderMemoryRepositoryModel() = OrderMemoryRepositoryModel(
     totalAmount = 10.0,
     orderNumber = OrderNumber().value
 )
+
+fun createOrderWithCouponMemoryRepositoryModel() = OrderMemoryRepositoryModel(
+    id = UUID.randomUUID(),
+    document = "38592226007",
+    totalAmount = 10.0,
+    orderNumber = OrderNumber().value,
+    couponCode = "DESC10"
+)
