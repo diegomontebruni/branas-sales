@@ -5,9 +5,11 @@ import com.montebruni.sales.fixture.resource.rest.createOrderRequest
 import com.montebruni.sales.fixture.usecase.createCreateOrderOutput
 import com.montebruni.sales.application.usecase.CalculateFreight
 import com.montebruni.sales.application.usecase.CreateOrder
+import com.montebruni.sales.application.usecase.FindOrderByOrderNumber
 import com.montebruni.sales.application.usecase.input.CalculateFreightInput
 import com.montebruni.sales.application.usecase.input.CreateOrderInput
 import com.montebruni.sales.fixture.resource.rest.createCalculateFreightRequest
+import com.montebruni.sales.fixture.usecase.createOrderOutput
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -24,6 +26,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 
 @WebMvcTest(controllers = [OrderController::class])
 class OrderControllerIT : BaseRestIT() {
@@ -34,11 +37,14 @@ class OrderControllerIT : BaseRestIT() {
     @MockkBean
     private lateinit var calculateFreight: CalculateFreight
 
+    @MockkBean
+    private lateinit var findOrderByOrderNumber: FindOrderByOrderNumber
+
     private val baseUrl = "/v1/orders"
 
     @AfterEach
     internal fun tearDown() {
-        confirmVerified(createOrder, calculateFreight)
+        confirmVerified(createOrder, calculateFreight, findOrderByOrderNumber)
     }
 
     @Nested
@@ -97,6 +103,28 @@ class OrderControllerIT : BaseRestIT() {
                 }
 
             verify { calculateFreight.execute(useCaseSlot.captured) }
+        }
+    }
+
+    @Nested
+    @DisplayName("Get by order number")
+    inner class GetByOrderNumberTestCases {
+
+        @Test
+        fun `should retrieve order when given a valid order number`() {
+            val orderNumber = "202300000001"
+            val expectedOutput = createOrderOutput()
+
+            every { findOrderByOrderNumber.execute(orderNumber) } returns expectedOutput
+
+            mockMvc.perform(
+                get("$baseUrl/$orderNumber").contentType(MediaType.APPLICATION_JSON)
+            )
+                .andExpect(status().is2xxSuccessful)
+                .andExpect(jsonPath("id").value(expectedOutput.id.toString()))
+                .andExpect(jsonPath("order_number").value(expectedOutput.orderNumber))
+
+            verify { findOrderByOrderNumber.execute(orderNumber) }
         }
     }
 }

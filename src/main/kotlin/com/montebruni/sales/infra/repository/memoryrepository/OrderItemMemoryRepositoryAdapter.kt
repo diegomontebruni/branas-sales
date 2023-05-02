@@ -4,7 +4,6 @@ import com.montebruni.sales.application.domain.entity.OrderItem
 import com.montebruni.sales.application.domain.port.OrderItemRepository
 import com.montebruni.sales.extensions.domain.entity.toOrderItemMemoryRepositoryModel
 import com.montebruni.sales.extensions.repository.memoryrepository.toOrderItem
-import com.montebruni.sales.extensions.repository.memoryrepository.toProduct
 import com.montebruni.sales.infra.repository.memoryrepository.model.ProductMemoryRepositoryModel
 import com.montebruni.sales.infra.repository.memoryrepository.port.OrderItemMemoryRepository
 import com.montebruni.sales.infra.repository.memoryrepository.port.ProductMemoryRepository
