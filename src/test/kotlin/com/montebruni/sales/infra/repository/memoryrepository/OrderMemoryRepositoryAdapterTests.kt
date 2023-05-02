@@ -8,6 +8,7 @@ import com.montebruni.sales.fixture.infra.repository.memoryrepository.createOrde
 import com.montebruni.sales.fixture.infra.repository.memoryrepository.createOrderMemoryRepositoryModel
 import com.montebruni.sales.fixture.infra.repository.memoryrepository.createOrderWithCouponMemoryRepositoryModel
 import com.montebruni.sales.fixture.infra.repository.memoryrepository.createProductMemoryRepositoryModel
+import com.montebruni.sales.infra.repository.memoryrepository.model.OrderItemMemoryRepositoryModel
 import com.montebruni.sales.infra.repository.memoryrepository.model.OrderMemoryRepositoryModel
 import com.montebruni.sales.infra.repository.memoryrepository.port.CouponMemoryRepository
 import com.montebruni.sales.infra.repository.memoryrepository.port.OrderItemMemoryRepository
@@ -25,7 +26,6 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import java.util.*
 
@@ -47,17 +47,20 @@ class OrderMemoryRepositoryAdapterTests(
     @Test
     fun `should save an order successfully`() {
         val order = createOrder()
-        val orderModel = createOrderMemoryRepositoryModel()
         val saveSlot = slot<OrderMemoryRepositoryModel>()
+        val itemsSlot = mutableListOf<OrderItemMemoryRepositoryModel>()
 
-        every { orderRepository.save(capture(saveSlot)) } returns orderModel
+        every { orderRepository.save(capture(saveSlot)) } answers { saveSlot.captured }
+        every { orderItemRepository.save(capture(itemsSlot)) } answers { itemsSlot.captured() }
 
         val savedOrder = orderMemoryRepositoryAdapter.save(order)
 
         assertEquals(order.id, saveSlot.captured.id)
         assertEquals(order.id, savedOrder.id)
+        assertEquals(3, itemsSlot.size)
 
         verify { orderRepository.save(saveSlot.captured) }
+        itemsSlot.forEach { verify { orderItemRepository.save(it) } }
     }
 
     @Nested

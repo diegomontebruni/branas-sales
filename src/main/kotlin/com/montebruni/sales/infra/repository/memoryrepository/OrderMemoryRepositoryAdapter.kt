@@ -2,6 +2,7 @@ package com.montebruni.sales.infra.repository.memoryrepository
 
 import com.montebruni.sales.application.domain.entity.Order
 import com.montebruni.sales.application.domain.port.OrderRepository
+import com.montebruni.sales.extensions.domain.entity.toOrderItemMemoryRepositoryModel
 import com.montebruni.sales.extensions.domain.entity.toOrderMemoryRepositoryModel
 import com.montebruni.sales.extensions.repository.memoryrepository.toCoupon
 import com.montebruni.sales.extensions.repository.memoryrepository.toOrder
@@ -21,7 +22,9 @@ class OrderMemoryRepositoryAdapter(
 ) : OrderRepository {
 
     override fun save(order: Order): Order =
-        orderMemoryRepository.save(order.toOrderMemoryRepositoryModel()).let { order }
+        orderMemoryRepository.save(order.toOrderMemoryRepositoryModel()).let { order }.also {
+            order.items.forEach { orderItemMemoryRepository.save(it.toOrderItemMemoryRepositoryModel()) }
+        }
 
     override fun getLastOrderNumber(): String? = orderMemoryRepository.getLastOrderNumber()
 
