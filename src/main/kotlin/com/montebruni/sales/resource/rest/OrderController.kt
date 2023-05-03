@@ -8,6 +8,7 @@ import com.montebruni.sales.resource.rest.response.CreateCheckoutResponse
 import com.montebruni.sales.application.usecase.CalculateFreight
 import com.montebruni.sales.application.usecase.CreateOrder
 import com.montebruni.sales.application.usecase.FindOrderByOrderNumber
+import com.montebruni.sales.application.usecase.GetAllOrders
 import com.montebruni.sales.resource.rest.response.CalculateFreightResponse
 import com.montebruni.sales.resource.rest.response.OrderResponse
 import io.swagger.v3.oas.annotations.Operation
@@ -27,7 +28,8 @@ import org.springframework.web.bind.annotation.RestController
 class OrderController(
     private val createOrder: CreateOrder,
     private val calculateFreight: CalculateFreight,
-    private val findOrderByOrderNumber: FindOrderByOrderNumber
+    private val findOrderByOrderNumber: FindOrderByOrderNumber,
+    private val getAllOrders: GetAllOrders
 ) {
 
     @Operation(
@@ -81,6 +83,33 @@ class OrderController(
     @GetMapping("/{orderNumber}")
     fun getByOrderNumber(@PathVariable orderNumber: String) : OrderResponse =
         findOrderByOrderNumber.execute(orderNumber).let {
+            OrderResponse(
+                id = it.id,
+                orderNumber = it.orderNumber,
+                document = it.document,
+                totalAmount = it.totalAmount,
+                items = it.items.map { item -> OrderResponse.OrderItemResponse(
+                    id = item.id,
+                    productId = item.productId,
+                    price = item.price,
+                    quantity = item.quantity
+                ) }
+            )
+        }
+
+    @Operation(
+        summary = "Get orders",
+        description = "Get the saved orders",
+        tags = ["Orders"]
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(responseCode = "200", description = "Order is retrieve successfully"),
+        ]
+    )
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    fun getOrders(): List<OrderResponse> = getAllOrders.execute().map {
             OrderResponse(
                 id = it.id,
                 orderNumber = it.orderNumber,

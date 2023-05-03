@@ -6,6 +6,7 @@ import com.montebruni.sales.fixture.usecase.createCreateOrderOutput
 import com.montebruni.sales.application.usecase.CalculateFreight
 import com.montebruni.sales.application.usecase.CreateOrder
 import com.montebruni.sales.application.usecase.FindOrderByOrderNumber
+import com.montebruni.sales.application.usecase.GetAllOrders
 import com.montebruni.sales.application.usecase.input.CalculateFreightInput
 import com.montebruni.sales.application.usecase.input.CreateOrderInput
 import com.montebruni.sales.fixture.resource.rest.createCalculateFreightRequest
@@ -40,11 +41,14 @@ class OrderControllerIT : BaseRestIT() {
     @MockkBean
     private lateinit var findOrderByOrderNumber: FindOrderByOrderNumber
 
+    @MockkBean
+    private lateinit var getAllOrders: GetAllOrders
+
     private val baseUrl = "/v1/orders"
 
     @AfterEach
     internal fun tearDown() {
-        confirmVerified(createOrder, calculateFreight, findOrderByOrderNumber)
+        confirmVerified(createOrder, calculateFreight, findOrderByOrderNumber, getAllOrders)
     }
 
     @Nested
@@ -125,6 +129,29 @@ class OrderControllerIT : BaseRestIT() {
                 .andExpect(jsonPath("order_number").value(expectedOutput.orderNumber))
 
             verify { findOrderByOrderNumber.execute(orderNumber) }
+        }
+    }
+
+    @Nested
+    @DisplayName("Get orders")
+    inner class GetOrdersTestCases {
+
+        @Test
+        fun `should retrieve all saved orders`() {
+            val expectedOutput = listOf(
+                createOrderOutput(),
+                createOrderOutput()
+            )
+
+            every { getAllOrders.execute() } returns expectedOutput
+
+            mockMvc.perform(
+                get(baseUrl).contentType(MediaType.APPLICATION_JSON)
+            )
+                .andExpect(status().is2xxSuccessful)
+                .andExpect(jsonPath("$").isArray())
+
+            verify { getAllOrders.execute() }
         }
     }
 }
