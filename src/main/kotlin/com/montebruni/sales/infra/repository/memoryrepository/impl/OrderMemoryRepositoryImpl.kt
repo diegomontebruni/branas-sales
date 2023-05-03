@@ -14,4 +14,5 @@ class OrderMemoryRepositoryImpl : OrderMemoryRepository {
     override fun findByOrderNumber(orderNumber: String): OrderMemoryRepositoryModel? = orders.find {
         it.orderNumber == orderNumber
     }
+    override fun getAllOrders(): List<OrderMemoryRepositoryModel> = orders
 }

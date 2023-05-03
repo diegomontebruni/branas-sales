@@ -38,7 +38,7 @@ class OrderMemoryRepositoryAdapter(
             )
         } ?: throw IllegalArgumentException("Order not found for order number")
 
-    override fun getOrders(): List<Order> {
-        TODO("Not yet implemented")
+    override fun getOrders(): List<Order> = orderMemoryRepository.getAllOrders().map {
+        findByOrderNumber(it.orderNumber)
     }
 }
