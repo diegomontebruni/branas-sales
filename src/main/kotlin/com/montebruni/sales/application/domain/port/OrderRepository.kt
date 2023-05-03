@@ -6,4 +6,5 @@ interface OrderRepository {
     fun save(order: Order): Order
     fun getLastOrderNumber(): String?
     fun findByOrderNumber(orderNumber: String): Order
+    fun getOrders(): List<Order>
 }

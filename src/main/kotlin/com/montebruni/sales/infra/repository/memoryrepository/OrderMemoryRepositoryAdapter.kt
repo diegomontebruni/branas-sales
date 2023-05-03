@@ -37,4 +37,8 @@ class OrderMemoryRepositoryAdapter(
                 coupon = orderModel.couponCode?.let { couponMemoryRepository.findByCode(it)?.toCoupon() }
             )
         } ?: throw IllegalArgumentException("Order not found for order number")
+
+    override fun getOrders(): List<Order> {
+        TODO("Not yet implemented")
+    }
 }
