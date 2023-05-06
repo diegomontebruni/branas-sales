@@ -26,5 +26,5 @@ data class OrderPostgresqlModel(
     val totalAmount: Double,
 
     @Column(name = "coupon_code")
-    val couponCode: String
+    val couponCode: String?
 )
