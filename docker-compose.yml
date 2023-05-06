@@ -1,35 +1,26 @@
-version: "3.8"
+version: "3.9"
 
 services:
-  mongodb:
-    image: mongo:5.0.17
+  postgres:
+    image: postgres:12-alpine
     restart: unless-stopped
+    container_name: sales_postgres
     environment:
-      MONGO_INITDB_ROOT_USERNAME: sales
-      MONGO_INITDB_ROOT_PASSWORD: sales
-      MONG_INITDB_DATABASE: sales
+      - POSTGRES_USER=app_sales
+      - POSTGRES_PASSWORD=app_sales
+      - POSTGRES_DB=sales
     ports:
-      - "27017:27017"
-    volumes:
-      - sales_mongo:/data/db
-
-  mongo-express:
-    image: mongo-express:latest
-    container_name: mongo-express
-    restart: always
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: sales
-      ME_CONFIG_MONGODB_ADMINPASSWORD: sales
-      ME_CONFIG_MONGODB_SERVER: mongodb
-      ME_CONFIG_BASICAUTH_USERNAME: admin
-      ME_CONFIG_BASICAUTH_PASSWORD: admin123
-    ports:
-      - "8081:8081"
-    depends_on:
-      - mongodb
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg-isready -U app_sales -d sales'"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - sales-network
 
 volumes:
-  sales_mongo: { }
+  sales_postgres: { }
 
 networks:
   sales-network:
