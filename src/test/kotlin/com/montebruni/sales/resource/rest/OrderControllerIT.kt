@@ -150,6 +150,7 @@ class OrderControllerIT : BaseRestIT() {
             )
                 .andExpect(status().is2xxSuccessful)
                 .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$.length()").value(expectedOutput.size))
 
             verify { getAllOrders.execute() }
         }
