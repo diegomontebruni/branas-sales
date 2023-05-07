@@ -1,6 +1,9 @@
 package com.montebruni.sales.common
 
 import com.montebruni.sales.configuration.jackson.JacksonObjectMapperConfiguration
+import jakarta.persistence.EntityManager
+import org.junit.jupiter.api.BeforeEach
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.context.annotation.Import
@@ -14,6 +17,17 @@ import org.testcontainers.utility.DockerImageName
 @Import(JacksonObjectMapperConfiguration::class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class DatabaseIT {
+
+    @Autowired
+    private lateinit var entityManager: EntityManager
+
+    @BeforeEach
+    fun cleanDatabase() {
+        val tables = listOf("coupon", "order_item", "\"order\"", "product")
+        entityManager
+            .createNativeQuery("truncate ${tables.joinToString(separator = ", ") } cascade")
+            .executeUpdate()
+    }
 
     companion object {
         @JvmStatic
