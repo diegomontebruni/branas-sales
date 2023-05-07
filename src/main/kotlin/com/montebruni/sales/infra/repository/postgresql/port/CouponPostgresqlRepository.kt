@@ -7,5 +7,5 @@ import java.util.UUID
 
 @Repository
 interface CouponPostgresqlRepository : JpaRepository<CouponPostgresqlModel, UUID> {
-    fun findByCode(code: String): CouponPostgresqlModel
+    fun findByCode(code: String): CouponPostgresqlModel?
 }

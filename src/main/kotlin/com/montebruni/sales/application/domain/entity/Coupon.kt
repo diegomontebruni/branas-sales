@@ -2,8 +2,10 @@ package com.montebruni.sales.application.domain.entity
 
 import com.montebruni.sales.application.domain.valueobjects.Amount
 import java.time.Instant
+import java.util.UUID
 
 data class Coupon(
+    val id: UUID,
     val code: String,
     val percentage: Int,
     val expirationAt: Instant
