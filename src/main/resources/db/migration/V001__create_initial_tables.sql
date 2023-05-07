@@ -5,6 +5,8 @@ create table coupon (
     expiration_at timestamp with time zone not null
 );
 
+CREATE INDEX idx_coupon_code ON coupon (code);
+
 create table product (
     id uuid primary key,
     description varchar not null,
@@ -19,7 +21,8 @@ create table "order" (
     order_number varchar not null,
     document varchar not null,
     total_amount numeric not null,
-    coupon_code varchar
+    coupon_id UUID,
+    FOREIGN KEY (coupon_id) REFERENCES coupon (id)
 );
 
 create table order_item (
