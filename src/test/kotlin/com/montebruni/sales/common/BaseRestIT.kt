@@ -1,4 +1,4 @@
-package com.montebruni.sales.common.rest
+package com.montebruni.sales.common
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.montebruni.sales.configuration.jackson.JacksonObjectMapperConfiguration
