@@ -75,6 +75,6 @@ tasks.withType<Test> {
 
 flyway {
 	url = "jdbc:postgresql://localhost:5432/sales"
-	user = "sales"
-	password = "sales"
+	user = "app_sales"
+	password = "app_sales"
 }
