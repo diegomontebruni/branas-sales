@@ -33,6 +33,8 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("io.github.microutils:kotlin-logging-jvm:$kotlinLoggingVersion")
 
+	implementation("org.hibernate.validator:hibernate-validator:8.0.0.Final")
+
 	// database
 	implementation("org.flywaydb:flyway-core")
 	runtimeOnly("org.postgresql:postgresql")
