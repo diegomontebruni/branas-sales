@@ -7,16 +7,17 @@ import org.springframework.context.annotation.Import
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.PostgreSQLContainer
+import org.testcontainers.utility.DockerImageName
 
 @DataJpaTest
 @Suppress("UtilityClassWithPublicConstructor")
 @Import(JacksonObjectMapperConfiguration::class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class DatabaseConfiguration {
+class DatabaseIT {
 
     companion object {
         @JvmStatic
-        val postgresContainer = PostgreSQLContainer("postgres:12-alpine").apply {
+        val postgresContainer = PostgreSQLContainer(DockerImageName.parse("postgres:12-alpine")).apply {
             withUsername("app_sales")
             withPassword("app_sales")
             withDatabaseName("sales")
