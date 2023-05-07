@@ -2,7 +2,7 @@ package com.montebruni.sales.resource.rest
 
 import com.montebruni.sales.application.usecase.ValidateCoupon
 import com.montebruni.sales.application.usecase.input.ValidateCouponInput
-import com.montebruni.sales.common.rest.BaseRestIT
+import com.montebruni.sales.common.BaseRestIT
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.confirmVerified
 import io.mockk.every

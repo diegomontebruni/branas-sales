@@ -1,6 +1,6 @@
 package com.montebruni.sales.resource.rest
 
-import com.montebruni.sales.common.rest.BaseRestIT
+import com.montebruni.sales.common.BaseRestIT
 import com.montebruni.sales.fixture.resource.rest.createOrderRequest
 import com.montebruni.sales.fixture.usecase.createCreateOrderOutput
 import com.montebruni.sales.application.usecase.CalculateFreight
