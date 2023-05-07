@@ -10,7 +10,7 @@ fun createCouponPostgresqlModel() = CouponPostgresqlModel(
 )
 
 fun createExpiredCouponPostgresqlModel() = CouponPostgresqlModel(
-    code = "DESC10",
-    percentage = 10,
+    code = "DESC11",
+    percentage = 11,
     expirationAt = Instant.now().minusSeconds(50)
 )

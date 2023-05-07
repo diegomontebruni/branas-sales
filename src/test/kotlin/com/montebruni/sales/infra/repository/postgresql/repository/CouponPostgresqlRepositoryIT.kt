@@ -32,6 +32,6 @@ class CouponPostgresqlRepositoryIT(
 
     @Test
     fun `should return null when try to get a coupon with invalid code`() {
-        assertNull(couponRepository.findByCode("test"))
+        assertNull(couponRepository.findByCode("Desc100"))
     }
 }

@@ -23,6 +23,9 @@ data class OrderItemPostgresqlModel(
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
     val product: ProductPostgresqlModel,
 
+    @Column(name = "order_id")
+    val orderId: UUID,
+
     @Column(name = "price")
     val price: Double,
 

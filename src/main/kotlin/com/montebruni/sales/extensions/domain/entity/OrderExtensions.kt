@@ -9,5 +9,4 @@ fun Order.toOrderPostgresqlModel() = OrderPostgresqlModel(
     document = document.value,
     totalAmount =  totalAmount.value.toDouble(),
     coupon = coupon?.toCouponPostgresqlModel(),
-    orderItems = items.map { it.toOrderItemPostgresqlModel() }.toMutableList()
 )
