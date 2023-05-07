@@ -23,7 +23,7 @@ class DatabaseIT {
 
     @BeforeEach
     fun cleanDatabase() {
-        val tables = listOf("coupon", "order_item", "\"order\"", "product")
+        val tables = listOf("items", "orders", "products", "coupons")
         entityManager
             .createNativeQuery("truncate ${tables.joinToString(separator = ", ") } cascade")
             .executeUpdate()

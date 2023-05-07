@@ -12,7 +12,7 @@ import jakarta.persistence.Table
 import java.util.UUID
 
 @Entity
-@Table(name = "order_item")
+@Table(name = "items")
 data class OrderItemPostgresqlModel(
 
     @Id

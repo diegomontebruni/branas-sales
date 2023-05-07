@@ -9,7 +9,7 @@ import jakarta.persistence.Table
 import java.util.*
 
 @Entity
-@Table(name = "product")
+@Table(name = "products")
 data class ProductPostgresqlModel(
 
     @Id

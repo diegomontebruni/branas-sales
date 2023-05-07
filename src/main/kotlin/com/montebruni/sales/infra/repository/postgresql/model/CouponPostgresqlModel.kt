@@ -10,8 +10,9 @@ import java.time.Instant
 import java.util.UUID
 
 @Entity
-@Table(name = "coupon")
+@Table(name = "coupons")
 data class CouponPostgresqlModel(
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     val id: UUID = UUID.randomUUID(),

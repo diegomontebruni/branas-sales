@@ -7,6 +7,6 @@ import java.util.UUID
 
 @Repository
 interface OrderPostgresqlRepository : JpaRepository<OrderPostgresqlModel, UUID> {
-    fun findTopByOrderByIdDesc(): OrderPostgresqlModel
-    fun findByOrderNumber(orderNumber: String): OrderPostgresqlModel
+    fun findTopByOrderByCreatedAtDesc(): OrderPostgresqlModel?
+    fun findByOrderNumber(orderNumber: String): OrderPostgresqlModel?
 }
