@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository
 import java.util.UUID
 
 @Repository
-interface OrderItemPostgresqlRepository : JpaRepository<OrderItemPostgresqlModel, UUID>
+interface OrderItemPostgresqlRepository : JpaRepository<OrderItemPostgresqlModel, UUID> {
+    fun findByOrderId(orderId: UUID): List<OrderItemPostgresqlModel>?
+}
