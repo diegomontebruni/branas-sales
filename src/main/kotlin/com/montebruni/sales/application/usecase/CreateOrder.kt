@@ -25,13 +25,13 @@ class CreateOrder(
     fun execute(input: CreateOrderInput) : CreateOrderOutput {
         logger.info { "Creating order for document: ${input.document}" }
 
-        val savedOrder = orderRepository.save(createOrderFromInput(input))
+        val order = createOrderFromInput(input).also { orderRepository.save(it) }
 
-        logger.info { "Created order with number: ${savedOrder.orderNumber.value}" }
+        logger.info { "Created order with number: ${order.orderNumber.value}" }
 
         return CreateOrderOutput(
-            orderNumber = savedOrder.orderNumber.value,
-            totalAmount = savedOrder.totalAmount.value.toDouble()
+            orderNumber = order.orderNumber.value,
+            totalAmount = order.totalAmount.value.toDouble()
         )
     }
 
