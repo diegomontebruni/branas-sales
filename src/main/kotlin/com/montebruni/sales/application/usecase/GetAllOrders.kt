@@ -10,7 +10,7 @@ class GetAllOrders(
     private val orderRepository: OrderRepository
 ) {
 
-    fun execute(): List<OrderOutput> = orderRepository.getOrders().map { createOutput(it) }
+    fun execute(): List<OrderOutput> = orderRepository.getOrders()?.map { createOutput(it) } ?: emptyList()
 
     private fun createOutput(order: Order) : OrderOutput = OrderOutput(
         id = order.id,
