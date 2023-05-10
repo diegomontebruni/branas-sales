@@ -1,5 +1,3 @@
 package com.montebruni.sales.application.usecase.output
 
-import java.util.UUID
-
-data class CreateOrderOutput(val orderId: UUID, val totalAmount: Double)
+data class CreateOrderOutput(val orderNumber: String, val totalAmount: Double)

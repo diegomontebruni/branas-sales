@@ -1,23 +1,23 @@
 package com.montebruni.sales.fixture.resource.rest
 
 import com.montebruni.sales.resource.rest.request.CalculateFreightRequest
-import com.montebruni.sales.resource.rest.request.CreateOrderRequest
+import com.montebruni.sales.resource.rest.request.CreateCheckoutRequest
 import java.util.*
 
-fun createOrderRequest() = CreateOrderRequest(
+fun createOrderRequest() = CreateCheckoutRequest(
     document = "",
     items = listOf(
-        CreateOrderRequest.ItemRequest(
+        CreateCheckoutRequest.CheckoutItemRequest(
             productId = UUID.randomUUID(),
             price = 1.55,
             quantity = 1
         ),
-        CreateOrderRequest.ItemRequest(
+        CreateCheckoutRequest.CheckoutItemRequest(
             productId = UUID.randomUUID(),
             price = 2.50,
             quantity = 1
         ),
-        CreateOrderRequest.ItemRequest(
+        CreateCheckoutRequest.CheckoutItemRequest(
             productId = UUID.randomUUID(),
             price = 3.60,
             quantity = 1

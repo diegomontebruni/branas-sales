@@ -2,11 +2,13 @@ package com.montebruni.sales.application.domain.entity
 
 import com.montebruni.sales.application.domain.valueobjects.Amount
 import com.montebruni.sales.application.domain.valueobjects.Document
+import com.montebruni.sales.application.domain.valueobjects.OrderNumber
 import com.montebruni.sales.extensions.toAmount
 import java.util.UUID
 
 data class Order(
     val id: UUID,
+    val orderNumber: OrderNumber,
     val document: Document,
     var totalAmount: Amount = Amount(),
     val items: List<OrderItem> = emptyList(),

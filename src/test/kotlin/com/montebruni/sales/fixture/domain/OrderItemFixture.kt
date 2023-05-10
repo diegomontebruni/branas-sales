@@ -6,7 +6,6 @@ import java.util.*
 
 fun createOrderItem() = OrderItem(
     product = createProduct(),
-    orderId = UUID.randomUUID(),
     price = Amount("100.00"),
     quantity = 10
 )

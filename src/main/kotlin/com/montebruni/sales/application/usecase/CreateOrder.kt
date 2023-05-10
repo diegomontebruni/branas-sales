@@ -1,14 +1,13 @@
 package com.montebruni.sales.application.usecase
 
-import com.montebruni.sales.application.domain.entity.Coupon
 import com.montebruni.sales.application.domain.entity.Order
 import com.montebruni.sales.application.domain.entity.OrderItem
-import com.montebruni.sales.application.domain.entity.Product
 import com.montebruni.sales.application.domain.port.CouponRepository
 import com.montebruni.sales.application.domain.port.OrderRepository
 import com.montebruni.sales.application.domain.port.ProductRepository
 import com.montebruni.sales.application.domain.valueobjects.Amount
 import com.montebruni.sales.application.domain.valueobjects.Document
+import com.montebruni.sales.application.domain.valueobjects.OrderNumber
 import com.montebruni.sales.application.usecase.input.CreateOrderInput
 import com.montebruni.sales.application.usecase.output.CreateOrderOutput
 import mu.KotlinLogging
@@ -26,37 +25,33 @@ class CreateOrder(
     fun execute(input: CreateOrderInput) : CreateOrderOutput {
         logger.info { "Creating order for document: ${input.document}" }
 
-        val orderId = Order.generateId()
-        val savedOrder = orderRepository.save(createOrderFromInput(input, orderId))
+        val order = createOrderFromInput(input).also { orderRepository.save(it) }
 
-        logger.info { "Created order with id: $orderId" }
+        logger.info { "Created order with number: ${order.orderNumber.value}" }
 
         return CreateOrderOutput(
-            orderId = savedOrder.id,
-            totalAmount = savedOrder.totalAmount.value.toDouble()
+            orderNumber = order.orderNumber.value,
+            totalAmount = order.totalAmount.value.toDouble()
         )
     }
 
-    private fun createOrderFromInput(input: CreateOrderInput, orderId: UUID): Order = Order(
-        id = orderId,
-        document = Document(input.document),
-        items = input.items.map { createItemFromInput(it, orderId) },
-        coupon = input.coupon?.let { findCoupon(it) }
-    )
+    private fun createOrderFromInput(input: CreateOrderInput): Order {
+        val orderId = Order.generateId()
+
+        return Order(
+            id = orderId,
+            orderNumber = orderRepository.getLastOrderNumber()?.let { OrderNumber(it).increment() } ?: OrderNumber(),
+            document = Document(input.document),
+            items = input.items.map { createItemFromInput(it, orderId) },
+            coupon = input.coupon?.let { couponRepository.findByCode(it).throwIfExpired() }
+        )
+    }
 
     private fun createItemFromInput(input: CreateOrderInput.ItemInput, orderId: UUID) = OrderItem(
-        orderId = orderId,
-        product = findProduct(input.productId),
+        product = productRepository.findById(input.productId),
         price = Amount(input.price),
         quantity = input.quantity
     )
-
-    private fun findProduct(productId: UUID): Product = productRepository.findById(productId)
-
-    private fun findCoupon(couponCode: String): Coupon = couponRepository.findByCode(couponCode).let {
-        if (it.isValid()) return it
-        throw IllegalArgumentException("Expired coupon")
-    }
 
     companion object {
         val logger = KotlinLogging.logger { }
