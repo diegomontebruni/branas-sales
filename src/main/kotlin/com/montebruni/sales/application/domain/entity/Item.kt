@@ -6,7 +6,6 @@ import java.util.*
 data class Item(
     val id: UUID = UUID.randomUUID(),
     val product: Product,
-    val price: Amount,
     val quantity: Int
 ) {
 
@@ -14,5 +13,5 @@ data class Item(
         if (quantity < 1) throw IllegalArgumentException("Invalid quantity")
     }
 
-    fun calculateTotalAmount(): Amount = price.multiply(quantity)
+    fun calculateTotalAmount(): Amount = product.price.multiply(quantity)
 }

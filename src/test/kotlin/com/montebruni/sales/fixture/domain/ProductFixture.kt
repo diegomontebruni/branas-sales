@@ -1,6 +1,7 @@
 package com.montebruni.sales.fixture.domain
 
 import com.montebruni.sales.application.domain.entity.Product
+import com.montebruni.sales.application.domain.valueobjects.Amount
 import com.montebruni.sales.application.domain.valueobjects.PositiveDouble
 import java.util.*
 
@@ -10,5 +11,6 @@ fun createProduct() = Product(
     height = PositiveDouble(20),
     width = PositiveDouble(15),
     length = PositiveDouble(10),
-    weight = PositiveDouble(1)
+    weight = PositiveDouble(1),
+    price = Amount("10")
 )

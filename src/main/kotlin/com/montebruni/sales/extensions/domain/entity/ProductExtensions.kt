@@ -9,5 +9,6 @@ fun Product.toProductPostgresqlModel() = ProductPostgresqlModel(
     length = length.value,
     width = width.value,
     weight = weight.value,
-    height = height.value
+    height = height.value,
+    price = price.value.toDouble()
 )

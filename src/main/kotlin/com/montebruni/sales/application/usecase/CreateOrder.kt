@@ -48,7 +48,6 @@ class CreateOrder(
 
     private fun createItemFromInput(input: CreateOrderInput.ItemInput) = Item(
         product = productRepository.findById(input.productId),
-        price = Amount(input.price),
         quantity = input.quantity
     )
 

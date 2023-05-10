@@ -13,7 +13,6 @@ data class OrderOutput(
     data class ItemOutput(
         val id: UUID,
         val productId: UUID,
-        val price: Double,
         val quantity: Int
     )
 }

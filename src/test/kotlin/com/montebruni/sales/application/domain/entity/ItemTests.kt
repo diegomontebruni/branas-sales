@@ -17,7 +17,7 @@ class ItemTests {
 
     @Test
     fun `should calculate total amount`() {
-        val expectedTotalAmount = "1000.00"
+        val expectedTotalAmount = "100.00"
         val orderItem = createOrderItem()
 
         val calculatedTotalAmount = orderItem.calculateTotalAmount()

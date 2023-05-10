@@ -9,5 +9,6 @@ fun createProductPostgresqlModel() = ProductPostgresqlModel(
     height = 20.0,
     width = 15.0,
     length = 10.0,
-    weight = 1.0
+    weight = 1.0,
+    price = 100.0
 )

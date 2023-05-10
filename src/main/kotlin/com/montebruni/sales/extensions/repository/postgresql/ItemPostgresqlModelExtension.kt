@@ -7,6 +7,5 @@ import com.montebruni.sales.infra.repository.postgresql.model.ItemPostgresqlMode
 fun ItemPostgresqlModel.toOrderItem() = Item(
     id = id,
     product = product.toProduct(),
-    price = Amount(price),
     quantity = quantity
 )

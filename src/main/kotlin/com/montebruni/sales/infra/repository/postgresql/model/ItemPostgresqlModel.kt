@@ -26,9 +26,6 @@ data class ItemPostgresqlModel(
     @Column(name = "order_id")
     val orderId: UUID,
 
-    @Column(name = "price")
-    val price: Double,
-
     @Column(name = "quantity")
     val quantity: Int
 )

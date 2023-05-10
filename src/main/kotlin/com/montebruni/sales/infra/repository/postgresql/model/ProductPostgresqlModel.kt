@@ -30,4 +30,7 @@ data class ProductPostgresqlModel(
 
     @Column(name = "weight")
     val weight: Double,
+
+    @Column(name = "price")
+    val price: Double,
 )

@@ -21,7 +21,6 @@ class FindOrderByOrderNumber(
         items = order.items.map { OrderOutput.ItemOutput(
             id = it.id,
             productId = it.product.id,
-            price = it.price.value.toDouble(),
             quantity = it.quantity
         ) },
         coupon = order.coupon?.code

@@ -7,7 +7,6 @@ import java.util.UUID
 fun Item.toItemPostgresqlModel(orderId: UUID) = ItemPostgresqlModel(
     id = id,
     product = product.toProductPostgresqlModel(),
-    price = price.value.toDouble(),
     quantity = quantity,
-    orderId = orderId
+    orderId = orderId,
 )

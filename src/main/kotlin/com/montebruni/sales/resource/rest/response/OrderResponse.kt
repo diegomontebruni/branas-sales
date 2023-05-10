@@ -13,7 +13,6 @@ data class OrderResponse(
     data class ItemResponse(
         val id: UUID,
         val productId: UUID,
-        val price: Double,
         val quantity: Int
     )
 }

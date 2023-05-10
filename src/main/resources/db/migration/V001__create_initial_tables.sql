@@ -13,7 +13,8 @@ create table products (
     height numeric not null,
     width numeric not null,
     "length" numeric not null,
-    weight numeric not null
+    weight numeric not null,
+    price numeric not null
 );
 
 create table orders (
@@ -32,7 +33,6 @@ create table items (
     id uuid primary key,
     order_id uuid not null,
     product_id uuid not null,
-    price numeric not null,
     quantity numeric not null,
     FOREIGN KEY (order_id) REFERENCES orders (id),
     FOREIGN KEY (product_id) REFERENCES products (id)

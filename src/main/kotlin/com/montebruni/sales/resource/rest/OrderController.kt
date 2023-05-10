@@ -91,7 +91,6 @@ class OrderController(
                 items = it.items.map { item -> OrderResponse.ItemResponse(
                     id = item.id,
                     productId = item.productId,
-                    price = item.price,
                     quantity = item.quantity
                 ) }
             )
@@ -118,7 +117,6 @@ class OrderController(
                 items = it.items.map { item -> OrderResponse.ItemResponse(
                     id = item.id,
                     productId = item.productId,
-                    price = item.price,
                     quantity = item.quantity
                 ) }
             )

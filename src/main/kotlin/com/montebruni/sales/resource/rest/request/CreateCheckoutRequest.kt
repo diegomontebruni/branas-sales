@@ -16,8 +16,6 @@ data class CreateCheckoutRequest(
     data class CheckoutItemRequest(
         @Schema(description = "The id of the product", example = "4bd2b777-b279-44e0-beb5-4e10b25d88ab")
         val productId: UUID,
-        @Schema(description = "The price of the product", example = "10.0")
-        val price: Double,
         @Schema(description = "The quantity of the product", example = "10")
         val quantity: Int
     )
@@ -27,7 +25,6 @@ fun CreateCheckoutRequest.toCreateOrderInput() = CreateOrderInput(
     document = document,
     items = items.map { CreateOrderInput.ItemInput(
         productId = it.productId,
-        price = it.price,
         quantity = it.quantity
     ) },
     coupon = coupon
