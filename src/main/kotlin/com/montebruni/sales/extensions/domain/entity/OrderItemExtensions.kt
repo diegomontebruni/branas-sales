@@ -1,10 +1,10 @@
 package com.montebruni.sales.extensions.domain.entity
 
-import com.montebruni.sales.application.domain.entity.OrderItem
-import com.montebruni.sales.infra.repository.postgresql.model.OrderItemPostgresqlModel
+import com.montebruni.sales.application.domain.entity.Item
+import com.montebruni.sales.infra.repository.postgresql.model.ItemPostgresqlModel
 import java.util.UUID
 
-fun OrderItem.toOrderItemPostgresqlModel(orderId: UUID) = OrderItemPostgresqlModel(
+fun Item.toItemPostgresqlModel(orderId: UUID) = ItemPostgresqlModel(
     id = id,
     product = product.toProductPostgresqlModel(),
     price = price.value.toDouble(),

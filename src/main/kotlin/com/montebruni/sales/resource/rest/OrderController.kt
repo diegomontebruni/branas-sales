@@ -88,7 +88,7 @@ class OrderController(
                 orderNumber = it.orderNumber,
                 document = it.document,
                 totalAmount = it.totalAmount,
-                items = it.items.map { item -> OrderResponse.OrderItemResponse(
+                items = it.items.map { item -> OrderResponse.ItemResponse(
                     id = item.id,
                     productId = item.productId,
                     price = item.price,
@@ -115,7 +115,7 @@ class OrderController(
                 orderNumber = it.orderNumber,
                 document = it.document,
                 totalAmount = it.totalAmount,
-                items = it.items.map { item -> OrderResponse.OrderItemResponse(
+                items = it.items.map { item -> OrderResponse.ItemResponse(
                     id = item.id,
                     productId = item.productId,
                     price = item.price,

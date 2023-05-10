@@ -1,7 +1,7 @@
 package com.montebruni.sales.application.usecase
 
 import com.montebruni.sales.application.domain.entity.Order
-import com.montebruni.sales.application.domain.entity.OrderItem
+import com.montebruni.sales.application.domain.entity.Item
 import com.montebruni.sales.application.domain.port.CouponRepository
 import com.montebruni.sales.application.domain.port.OrderRepository
 import com.montebruni.sales.application.domain.port.ProductRepository
@@ -13,7 +13,6 @@ import com.montebruni.sales.application.usecase.output.CreateOrderOutput
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class CreateOrder(
@@ -42,12 +41,12 @@ class CreateOrder(
             id = orderId,
             orderNumber = orderRepository.getLastOrderNumber()?.let { OrderNumber(it).increment() } ?: OrderNumber(),
             document = Document(input.document),
-            items = input.items.map { createItemFromInput(it, orderId) },
+            items = input.items.map { createItemFromInput(it) },
             coupon = input.coupon?.let { couponRepository.findByCode(it).throwIfExpired() }
         )
     }
 
-    private fun createItemFromInput(input: CreateOrderInput.ItemInput, orderId: UUID) = OrderItem(
+    private fun createItemFromInput(input: CreateOrderInput.ItemInput) = Item(
         product = productRepository.findById(input.productId),
         price = Amount(input.price),
         quantity = input.quantity

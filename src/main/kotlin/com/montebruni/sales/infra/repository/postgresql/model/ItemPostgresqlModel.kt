@@ -13,7 +13,7 @@ import java.util.UUID
 
 @Entity
 @Table(name = "items")
-data class OrderItemPostgresqlModel(
+data class ItemPostgresqlModel(
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -5,7 +5,7 @@ import com.montebruni.sales.fixture.domain.createOrder
 import com.montebruni.sales.fixture.infra.repository.postgresql.createOrderItemPostgresqlModel
 import com.montebruni.sales.fixture.infra.repository.postgresql.createOrderPostgresqlModel
 import com.montebruni.sales.infra.repository.postgresql.model.OrderPostgresqlModel
-import com.montebruni.sales.infra.repository.postgresql.port.OrderItemPostgresqlRepository
+import com.montebruni.sales.infra.repository.postgresql.port.ItemPostgresqlRepository
 import com.montebruni.sales.infra.repository.postgresql.port.OrderPostgresqlRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -28,7 +28,7 @@ import kotlin.IllegalArgumentException
 
 class OrderPostgresqlAdapterTest(
     @MockK private val orderRepository: OrderPostgresqlRepository,
-    @MockK private val orderItemRepository: OrderItemPostgresqlRepository
+    @MockK private val orderItemRepository: ItemPostgresqlRepository
 ) : UnitTests() {
 
     @InjectMockKs
