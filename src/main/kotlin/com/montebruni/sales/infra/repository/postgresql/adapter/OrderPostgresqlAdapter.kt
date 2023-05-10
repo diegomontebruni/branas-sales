@@ -8,6 +8,7 @@ import com.montebruni.sales.extensions.repository.postgresql.toOrder
 import com.montebruni.sales.infra.repository.postgresql.model.ItemPostgresqlModel
 import com.montebruni.sales.infra.repository.postgresql.port.ItemPostgresqlRepository
 import com.montebruni.sales.infra.repository.postgresql.port.OrderPostgresqlRepository
+import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.UUID
@@ -18,8 +19,11 @@ class OrderPostgresqlAdapter(
     @Autowired private val itemRepository: ItemPostgresqlRepository
 ) : OrderRepository {
 
-    override fun save(order: Order): Unit = orderRepository.save(order.toOrderPostgresqlModel()).let {
-        order.items.map { item -> itemRepository.save(item.toItemPostgresqlModel(order.id)) }
+    @Transactional
+    override fun save(order: Order): Unit {
+        val savedOrder = orderRepository.save(order.toOrderPostgresqlModel())
+
+        order.items.map { item -> itemRepository.save(item.toItemPostgresqlModel(savedOrder.id)) }
     }
 
     override fun getLastOrderNumber(): String? = orderRepository.findTopByOrderByCreatedAtDesc()?.orderNumber
