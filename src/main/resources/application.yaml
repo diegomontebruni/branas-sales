@@ -35,3 +35,7 @@ logging:
         com:
             montebruni:
                 sales: ${LOG_LEVEL:DEBUG}
+
+springdoc:
+    swagger-ui:
+        path: /swagger-ui.html
