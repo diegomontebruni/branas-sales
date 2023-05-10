@@ -13,7 +13,7 @@ import java.util.UUID
 
 @Entity
 @Table(name = "items")
-data class OrderItemPostgresqlModel(
+data class ItemPostgresqlModel(
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,9 +25,6 @@ data class OrderItemPostgresqlModel(
 
     @Column(name = "order_id")
     val orderId: UUID,
-
-    @Column(name = "price")
-    val price: Double,
 
     @Column(name = "quantity")
     val quantity: Int

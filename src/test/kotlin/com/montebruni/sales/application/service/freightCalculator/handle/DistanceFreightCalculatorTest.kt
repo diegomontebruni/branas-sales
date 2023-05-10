@@ -1,9 +1,9 @@
 package com.montebruni.sales.application.service.freightCalculator.handle
 
 import com.montebruni.sales.common.UnitTests
-import com.montebruni.sales.application.service.freightCalculator.handle.DefaultFreightCalculator
-import com.montebruni.sales.application.service.freightCalculator.handle.DistanceFreightCalculator
-import com.montebruni.sales.application.service.freightCalculator.FreightCalculatorInput
+import com.montebruni.sales.application.domain.entity.freightCalculator.handlers.DefaultFreightCalculator
+import com.montebruni.sales.application.domain.entity.freightCalculator.handlers.DistanceFreightCalculator
+import com.montebruni.sales.application.domain.entity.freightCalculator.FreightCalculatorInput
 import com.montebruni.sales.fixture.resource.calculator.freightCalculator.createFreightCalculatorInput
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs

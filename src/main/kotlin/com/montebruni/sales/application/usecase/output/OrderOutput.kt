@@ -7,13 +7,12 @@ data class OrderOutput(
     val orderNumber: String,
     val document: String,
     val totalAmount: Double,
-    val items: List<OrderItemOutput>,
+    val items: List<ItemOutput>,
     val coupon: String? = null
 ) {
-    data class OrderItemOutput(
+    data class ItemOutput(
         val id: UUID,
         val productId: UUID,
-        val price: Double,
         val quantity: Int
     )
 }

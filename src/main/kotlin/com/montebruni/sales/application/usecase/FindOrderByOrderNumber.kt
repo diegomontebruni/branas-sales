@@ -18,10 +18,9 @@ class FindOrderByOrderNumber(
         orderNumber = order.orderNumber.value,
         document = order.document.value,
         totalAmount = order.totalAmount.value.toDouble(),
-        items = order.items.map { OrderOutput.OrderItemOutput(
+        items = order.items.map { OrderOutput.ItemOutput(
             id = it.id,
             productId = it.product.id,
-            price = it.price.value.toDouble(),
             quantity = it.quantity
         ) },
         coupon = order.coupon?.code

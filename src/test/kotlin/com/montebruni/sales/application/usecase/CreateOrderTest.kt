@@ -5,6 +5,7 @@ import com.montebruni.sales.application.domain.entity.Order
 import com.montebruni.sales.application.domain.port.CouponRepository
 import com.montebruni.sales.application.domain.port.OrderRepository
 import com.montebruni.sales.application.domain.port.ProductRepository
+import com.montebruni.sales.application.domain.valueobjects.Amount
 import com.montebruni.sales.application.domain.valueobjects.OrderNumber
 import com.montebruni.sales.fixture.domain.createCoupon
 import com.montebruni.sales.fixture.domain.createExpiredCoupon
@@ -52,9 +53,9 @@ class CreateOrderTest(
         every {
             productRepository.findById(capture(productIdSlot))
         } returns
-            createProduct().copy(id = UUID.randomUUID()) andThen
-            createProduct().copy(id = UUID.randomUUID()) andThen
-            createProduct().copy(id = UUID.randomUUID())
+            createProduct().copy(id = UUID.randomUUID(), price = Amount(1.0)) andThen
+            createProduct().copy(id = UUID.randomUUID(), price = Amount(2.0)) andThen
+            createProduct().copy(id = UUID.randomUUID(), price = Amount(3.55))
 
         val output = useCase.execute(input)
 
@@ -75,7 +76,7 @@ class CreateOrderTest(
     @Test
     fun `should create an order when has a valid input without coupon`() {
         val input = createCreateOrderInput()
-        val expectedTotalAmount = "6.55"
+        val expectedTotalAmount = 30.00
         val orderNumberOutput = OrderNumber()
         val expectedOrderNumber = orderNumberOutput.copy().increment().value
 
@@ -97,8 +98,8 @@ class CreateOrderTest(
         assertEquals(input.document, orderRepositorySlot.captured.document.value)
         assertEquals(input.items.size, orderRepositorySlot.captured.items.size)
         assertNull(orderRepositorySlot.captured.coupon)
-        assertEquals(expectedTotalAmount, output.totalAmount.toString())
-        assertEquals(expectedTotalAmount, orderRepositorySlot.captured.totalAmount.toString())
+        assertEquals(expectedTotalAmount, output.totalAmount)
+        assertEquals(expectedTotalAmount, orderRepositorySlot.captured.totalAmount.value.toDouble())
 
         verify {
             orderRepository.save(orderRepositorySlot.captured)
@@ -113,7 +114,7 @@ class CreateOrderTest(
         val orderNumberOutput = OrderNumber()
 
         val expectedOrderNumber = orderNumberOutput.copy().increment().value
-        val expectedTotalAmount = "5.71"
+        val expectedTotalAmount = 27.0
         val expectedCoupon = createCoupon()
 
         val orderRepositorySlot = slot<Order>()
@@ -136,9 +137,9 @@ class CreateOrderTest(
         assertEquals(input.document, orderRepositorySlot.captured.document.value)
         assertEquals(input.items.size, orderRepositorySlot.captured.items.size)
         assertEquals(expectedCoupon.code, orderRepositorySlot.captured.coupon?.code)
-        assertEquals(expectedTotalAmount, orderRepositorySlot.captured.totalAmount.toString())
+        assertEquals(expectedTotalAmount, orderRepositorySlot.captured.totalAmount.value.toDouble())
         assertEquals(input.coupon, couponSlot.captured)
-        assertEquals(expectedTotalAmount, output.totalAmount.toString())
+        assertEquals(expectedTotalAmount, output.totalAmount)
 
         verify {
             orderRepository.save(orderRepositorySlot.captured)

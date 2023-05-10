@@ -2,9 +2,9 @@ package com.montebruni.sales.application.service.freightCalculator
 
 import com.montebruni.sales.common.UnitTests
 import com.montebruni.sales.fixture.domain.createFreight
-import com.montebruni.sales.application.service.freightCalculator.FreightCalculatorAdapter
-import com.montebruni.sales.application.service.freightCalculator.handle.VolumeFreightCalculator
-import com.montebruni.sales.application.service.freightCalculator.FreightCalculatorInput
+import com.montebruni.sales.application.domain.entity.freightCalculator.FreightCalculatorAdapter
+import com.montebruni.sales.application.domain.entity.freightCalculator.handlers.VolumeFreightCalculator
+import com.montebruni.sales.application.domain.entity.freightCalculator.FreightCalculatorInput
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK

@@ -1,11 +1,9 @@
 package com.montebruni.sales.fixture.domain
 
-import com.montebruni.sales.application.domain.entity.OrderItem
+import com.montebruni.sales.application.domain.entity.Item
 import com.montebruni.sales.application.domain.valueobjects.Amount
-import java.util.*
 
-fun createOrderItem() = OrderItem(
+fun createOrderItem() = Item(
     product = createProduct(),
-    price = Amount("100.00"),
     quantity = 10
 )

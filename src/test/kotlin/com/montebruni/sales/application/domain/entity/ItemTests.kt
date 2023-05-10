@@ -7,7 +7,7 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
-class OrderItemTests {
+class ItemTests {
 
     @ParameterizedTest
     @ValueSource(ints = [-1, -100, -200])
@@ -17,7 +17,7 @@ class OrderItemTests {
 
     @Test
     fun `should calculate total amount`() {
-        val expectedTotalAmount = "1000.00"
+        val expectedTotalAmount = "100.00"
         val orderItem = createOrderItem()
 
         val calculatedTotalAmount = orderItem.calculateTotalAmount()

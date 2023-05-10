@@ -9,7 +9,6 @@ data class CreateOrderInput(
 ) {
     data class ItemInput(
         val productId: UUID,
-        val price: Double,
         val quantity: Int
     )
 }

@@ -3,7 +3,6 @@ package com.montebruni.sales.application.usecase
 import com.montebruni.sales.common.UnitTests
 import com.montebruni.sales.application.domain.entity.Freight
 import com.montebruni.sales.application.domain.port.FreightCalculator
-import com.montebruni.sales.application.usecase.CalculateFreight
 import com.montebruni.sales.fixture.usecase.createCalculateFreightInput
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs

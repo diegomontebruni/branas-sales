@@ -7,13 +7,12 @@ data class OrderResponse(
     val orderNumber: String,
     val document: String,
     val totalAmount: Double,
-    val items: List<OrderItemResponse>,
+    val items: List<ItemResponse>,
     val coupon: String? = null
 ) {
-    data class OrderItemResponse(
+    data class ItemResponse(
         val id: UUID,
         val productId: UUID,
-        val price: Double,
         val quantity: Int
     )
 }

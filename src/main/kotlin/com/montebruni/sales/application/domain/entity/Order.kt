@@ -11,7 +11,7 @@ data class Order(
     val orderNumber: OrderNumber,
     val document: Document,
     var totalAmount: Amount = Amount(),
-    val items: List<OrderItem> = emptyList(),
+    val items: List<Item> = emptyList(),
     val coupon: Coupon? = null,
 ) {
 

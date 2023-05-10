@@ -3,10 +3,9 @@ package com.montebruni.sales.fixture.usecase
 import com.montebruni.sales.application.usecase.output.OrderOutput
 import java.util.*
 
-fun createOrderItemOutput() = OrderOutput.OrderItemOutput(
+fun createOrderItemOutput() = OrderOutput.ItemOutput(
     id = UUID.randomUUID(),
     productId = UUID.randomUUID(),
-    price = 10.0,
     quantity = 1
 )
 

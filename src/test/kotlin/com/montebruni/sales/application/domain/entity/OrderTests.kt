@@ -16,14 +16,14 @@ class OrderTests {
 
     @Test
     fun `should calculate total amount successfully`() {
-        val expectedTotalAmount = "3000.00"
+        val expectedTotalAmount = "300.00"
 
         assertEquals(expectedTotalAmount, order.totalAmount.toString())
     }
 
     @Test
     fun `should calculate total amount when has a coupon`() {
-        val expectedTotalAmount = "2700.00"
+        val expectedTotalAmount = "270.00"
 
         assertEquals(expectedTotalAmount, orderWithCoupon.totalAmount.toString())
     }
