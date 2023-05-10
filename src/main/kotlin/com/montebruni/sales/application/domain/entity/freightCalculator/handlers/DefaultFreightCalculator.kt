@@ -1,6 +1,6 @@
-package com.montebruni.sales.application.service.freightCalculator.handle
+package com.montebruni.sales.application.domain.entity.freightCalculator.handlers
 
-import com.montebruni.sales.application.service.freightCalculator.FreightCalculatorInput
+import com.montebruni.sales.application.domain.entity.freightCalculator.FreightCalculatorInput
 import org.springframework.stereotype.Component
 
 @Component
