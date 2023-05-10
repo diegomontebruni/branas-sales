@@ -2,8 +2,9 @@ package com.montebruni.sales.infra.repository.postgresql.adapter
 
 import com.montebruni.sales.common.UnitTests
 import com.montebruni.sales.fixture.domain.createOrder
-import com.montebruni.sales.fixture.infra.repository.postgresql.createOrderItemPostgresqlModel
+import com.montebruni.sales.fixture.infra.repository.postgresql.createItemPostgresqlModel
 import com.montebruni.sales.fixture.infra.repository.postgresql.createOrderPostgresqlModel
+import com.montebruni.sales.infra.repository.postgresql.model.ItemPostgresqlModel
 import com.montebruni.sales.infra.repository.postgresql.model.OrderPostgresqlModel
 import com.montebruni.sales.infra.repository.postgresql.port.ItemPostgresqlRepository
 import com.montebruni.sales.infra.repository.postgresql.port.OrderPostgresqlRepository
@@ -28,7 +29,7 @@ import kotlin.IllegalArgumentException
 
 class OrderPostgresqlAdapterTest(
     @MockK private val orderRepository: OrderPostgresqlRepository,
-    @MockK private val orderItemRepository: ItemPostgresqlRepository
+    @MockK private val itemRepository: ItemPostgresqlRepository
 ) : UnitTests() {
 
     @InjectMockKs
@@ -36,20 +37,24 @@ class OrderPostgresqlAdapterTest(
 
     @AfterEach
     fun tearDown() {
-        confirmVerified(orderRepository, orderItemRepository)
+        confirmVerified(orderRepository, itemRepository)
     }
 
     @Test
     fun `should save an order and return nothing`() {
         val order = createOrder()
         val orderModelSlot = slot<OrderPostgresqlModel>()
+        val itemModelSlot = mutableListOf<ItemPostgresqlModel>()
 
         every { orderRepository.save(capture(orderModelSlot)) } returns createOrderPostgresqlModel()
+        every { itemRepository.save(capture(itemModelSlot)) } answers { itemModelSlot.captured() }
 
         orderAdapter.save(order)
 
         assertEquals(order.id, orderModelSlot.captured.id)
+        assertEquals(order.items.size, itemModelSlot.size)
 
+        itemModelSlot.forEach { verify { itemRepository.save(it) } }
         verify { orderRepository.save(orderModelSlot.captured) }
     }
 
@@ -87,11 +92,11 @@ class OrderPostgresqlAdapterTest(
         @Test
         fun `should return order by order number`() {
             val orderModel = createOrderPostgresqlModel()
-            val orderItems = listOf(createOrderItemPostgresqlModel())
+            val orderItems = listOf(createItemPostgresqlModel())
             val orderIdSlot = slot<UUID>()
 
             every { orderRepository.findByOrderNumber(orderModel.orderNumber) } returns orderModel
-            every { orderItemRepository.findByOrderId(capture(orderIdSlot)) } returns orderItems
+            every { itemRepository.findByOrderId(capture(orderIdSlot)) } returns orderItems
 
             val order = orderAdapter.findByOrderNumber(orderNumber = orderModel.orderNumber)
 
@@ -103,7 +108,7 @@ class OrderPostgresqlAdapterTest(
 
             verify {
                 orderRepository.findByOrderNumber(orderModel.orderNumber)
-                orderItemRepository.findByOrderId(orderIdSlot.captured)
+                itemRepository.findByOrderId(orderIdSlot.captured)
             }
         }
 
@@ -128,7 +133,7 @@ class OrderPostgresqlAdapterTest(
             val orderIdSlot = slot<UUID>()
 
             every { orderRepository.findByOrderNumber(orderModel.orderNumber) } returns orderModel
-            every { orderItemRepository.findByOrderId(capture(orderIdSlot)) } returns null
+            every { itemRepository.findByOrderId(capture(orderIdSlot)) } returns null
 
             assertThrows<IllegalArgumentException> { orderAdapter.findByOrderNumber(orderModel.orderNumber) }.run {
                 assertEquals(this.message, "Items not found for order id ${orderIdSlot.captured}")
@@ -138,7 +143,7 @@ class OrderPostgresqlAdapterTest(
 
             verify {
                 orderRepository.findByOrderNumber(orderModel.orderNumber)
-                orderItemRepository.findByOrderId(orderIdSlot.captured)
+                itemRepository.findByOrderId(orderIdSlot.captured)
             }
         }
     }
@@ -150,10 +155,10 @@ class OrderPostgresqlAdapterTest(
         @Test
         fun `test getOrders with success`() {
             val orderModels = listOf(createOrderPostgresqlModel())
-            val orderItems = listOf(createOrderItemPostgresqlModel())
+            val orderItems = listOf(createItemPostgresqlModel())
 
             coEvery { orderRepository.findAll() } returns orderModels
-            coEvery { orderItemRepository.findByOrderId(any()) } returns orderItems
+            coEvery { itemRepository.findByOrderId(any()) } returns orderItems
 
             val orders = orderAdapter.getOrders()
 
@@ -162,7 +167,7 @@ class OrderPostgresqlAdapterTest(
 
             coVerify {
                 orderRepository.findAll()
-                orderItemRepository.findByOrderId(any())
+                itemRepository.findByOrderId(any())
             }
         }
 
@@ -171,7 +176,7 @@ class OrderPostgresqlAdapterTest(
             val orderModels = listOf(createOrderPostgresqlModel())
 
             coEvery { orderRepository.findAll() } returns orderModels
-            coEvery { orderItemRepository.findByOrderId(any()) } returns null
+            coEvery { itemRepository.findByOrderId(any()) } returns null
 
             assertThrows<IllegalArgumentException> { orderAdapter.getOrders() }.run {
                 assertTrue(this.message!!.contains("Items not found for order id"))
@@ -179,7 +184,7 @@ class OrderPostgresqlAdapterTest(
 
             coVerify {
                 orderRepository.findAll()
-                orderItemRepository.findByOrderId(any())
+                itemRepository.findByOrderId(any())
             }
         }
     }

@@ -1,7 +1,7 @@
 package com.montebruni.sales.infra.repository.postgresql.repository
 
 import com.montebruni.sales.common.DatabaseIT
-import com.montebruni.sales.fixture.infra.repository.postgresql.createOrderItemPostgresqlModel
+import com.montebruni.sales.fixture.infra.repository.postgresql.createItemPostgresqlModel
 import com.montebruni.sales.fixture.infra.repository.postgresql.createOrderPostgresqlModel
 import com.montebruni.sales.fixture.infra.repository.postgresql.createProductPostgresqlModel
 import com.montebruni.sales.infra.repository.postgresql.port.ItemPostgresqlRepository
@@ -25,10 +25,10 @@ class ItemPostgresqlRepositoryIT(
         val savedProduct = productRepository.save(createProductPostgresqlModel())
 
         val orderItemsModel = listOf(
-            createOrderItemPostgresqlModel().copy(orderId = order.id, product = savedProduct),
-            createOrderItemPostgresqlModel().copy(orderId = order.id, product = savedProduct),
-            createOrderItemPostgresqlModel().copy(orderId = order.id, product = savedProduct),
-            createOrderItemPostgresqlModel().copy(orderId = order.id, product = savedProduct)
+            createItemPostgresqlModel().copy(orderId = order.id, product = savedProduct),
+            createItemPostgresqlModel().copy(orderId = order.id, product = savedProduct),
+            createItemPostgresqlModel().copy(orderId = order.id, product = savedProduct),
+            createItemPostgresqlModel().copy(orderId = order.id, product = savedProduct)
         ).onEach { orderItemRepository.save(it) }
 
         val orderItems = orderItemRepository.findByOrderId(orderId = order.id)
