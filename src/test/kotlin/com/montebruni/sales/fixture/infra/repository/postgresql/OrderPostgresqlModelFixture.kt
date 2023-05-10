@@ -6,6 +6,6 @@ import java.util.*
 fun createOrderPostgresqlModel() = OrderPostgresqlModel(
     id = UUID.randomUUID(),
     orderNumber = "202300000001",
-    document = "12312312312",
+    document = "39712790070",
     totalAmount = 100.0,
 )
