@@ -10,8 +10,8 @@ import java.math.BigDecimal
 import java.util.UUID
 
 @Entity
-@Table(name = "address")
-data class AddressPostgresqlModel(
+@Table(name = "address_coordinates")
+data class AddressCoordinatesPostgresqlModel(
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
