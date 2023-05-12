@@ -4,7 +4,8 @@ import com.montebruni.sales.application.domain.valueobjects.PositiveDouble
 import com.montebruni.sales.application.usecase.input.CalculateFreightInput
 
 fun createCalculateFreightInput() = CalculateFreightInput(
-    cep = "12312541",
+    fromCep = "12312541",
+    toCep = "90710923",
     listOf(
         CalculateFreightInput.Item(
             quantity = 1,

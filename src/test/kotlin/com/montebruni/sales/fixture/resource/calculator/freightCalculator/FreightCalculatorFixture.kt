@@ -8,6 +8,6 @@ fun createFreightCalculatorInput() = FreightCalculatorInput(
     height = 15.0,
     length = 10.0,
     weight = 1.0,
-    latitude = BigDecimal(10),
-    longitude = BigDecimal(10)
+    from = FreightCalculatorInput.Coordinates(latitude = BigDecimal(123), longitude = BigDecimal(123)),
+    to = FreightCalculatorInput.Coordinates(latitude = BigDecimal(456), longitude = BigDecimal(456))
 )

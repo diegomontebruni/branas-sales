@@ -8,7 +8,10 @@ data class Freight(
     val width: PositiveDouble,
     val length: PositiveDouble,
     val weight: PositiveDouble,
-    val latitude: BigDecimal,
-    val longitude: BigDecimal,
+    val from: Coordinates,
+    val to: Coordinates,
     val quantity: Int
-)
+) {
+
+    data class Coordinates(val latitude: BigDecimal, val longitude: BigDecimal)
+}

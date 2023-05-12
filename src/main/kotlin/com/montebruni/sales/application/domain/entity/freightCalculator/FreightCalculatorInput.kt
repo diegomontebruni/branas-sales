@@ -7,7 +7,10 @@ data class FreightCalculatorInput(
     val width: Double,
     val length: Double,
     val weight: Double,
-    val latitude: BigDecimal,
-    val longitude: BigDecimal,
+    val from: Coordinates,
+    val to: Coordinates,
     var calculatedValue: Double = 0.0
-)
+) {
+
+    data class Coordinates(val latitude: BigDecimal, val longitude: BigDecimal)
+}

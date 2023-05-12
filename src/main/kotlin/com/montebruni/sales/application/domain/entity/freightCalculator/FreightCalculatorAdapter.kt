@@ -18,8 +18,8 @@ class FreightCalculatorAdapter : FreightCalculator {
             width = input.width.value,
             length = input.length.value,
             weight = input.weight.value,
-            latitude = input.latitude,
-            longitude = input.longitude
+            from = FreightCalculatorInput.Coordinates(latitude = input.from.latitude, longitude = input.from.longitude),
+            to = FreightCalculatorInput.Coordinates(latitude = input.to.latitude, longitude = input.to.longitude)
         )
     ).toDecimal()
 }

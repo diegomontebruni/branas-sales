@@ -10,6 +10,6 @@ fun createFreight() = Freight(
     length = 10.0.toPositiveDouble(),
     weight = 1.0.toPositiveDouble(),
     quantity = 1,
-    longitude = BigDecimal(123),
-    latitude = BigDecimal(123)
+    from = Freight.Coordinates(latitude = BigDecimal("123"), longitude = BigDecimal("123")),
+    to = Freight.Coordinates(latitude = BigDecimal("456"), longitude = BigDecimal("456")),
 )

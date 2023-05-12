@@ -103,7 +103,8 @@ class OrderControllerIT : BaseRestIT() {
                 .andExpect(status().is2xxSuccessful)
                 .andExpect(jsonPath("freight_amount").value(expectedOutput.toString()))
                 .run {
-                    assertEquals(request.cep, useCaseSlot.captured.cep)
+                    assertEquals(request.fromCep, useCaseSlot.captured.fromCep)
+                    assertEquals(request.toCep, useCaseSlot.captured.toCep)
                     assertEquals(request.items.size, useCaseSlot.captured.items.size)
                 }
 

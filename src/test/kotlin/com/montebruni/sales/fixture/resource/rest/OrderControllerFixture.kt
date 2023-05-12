@@ -5,7 +5,7 @@ import com.montebruni.sales.resource.rest.request.CreateCheckoutRequest
 import java.util.*
 
 fun createOrderRequest() = CreateCheckoutRequest(
-    document = "",
+    document = "55600547048",
     items = listOf(
         CreateCheckoutRequest.CheckoutItemRequest(
             productId = UUID.randomUUID(),
@@ -23,7 +23,8 @@ fun createOrderRequest() = CreateCheckoutRequest(
 )
 
 fun createCalculateFreightRequest() = CalculateFreightRequest(
-    cep = "12341241",
+    fromCep = "12341241",
+    toCep = "09809876",
     items = listOf(
         CalculateFreightRequest.ItemRequest(
             quantity = 1,

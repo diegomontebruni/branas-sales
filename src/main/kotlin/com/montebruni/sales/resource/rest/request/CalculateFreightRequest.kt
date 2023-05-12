@@ -6,8 +6,10 @@ import io.swagger.v3.oas.annotations.media.Schema
 
 @Schema(description = "Request to simulate freight")
 data class CalculateFreightRequest(
-    @Schema(description = "Cep of the address")
-    val cep: String,
+    @Schema(description = "Cep address from send")
+    val fromCep: String,
+    @Schema(description = "Cep address to send")
+    val toCep: String,
     @Schema(description = "The items for the simulation")
     val items: List<ItemRequest>
 ) {
@@ -26,7 +28,8 @@ data class CalculateFreightRequest(
 }
 
 fun CalculateFreightRequest.toCalculateFreightInput() = CalculateFreightInput(
-    cep = cep,
+    fromCep = fromCep,
+    toCep = toCep,
     items = items.map {
         CalculateFreightInput.Item(
             quantity = it.quantity,

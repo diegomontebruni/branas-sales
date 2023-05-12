@@ -14,8 +14,11 @@ class CalculateFreight(
     @Autowired private val addressCoordinatesRepository: AddressCoordinatesRepository,
 ){
     fun execute(input: CalculateFreightInput): Double {
-        val coordinates = addressCoordinatesRepository.findByCep(input.cep)
-            ?: throw IllegalArgumentException("Invalid Cep")
+        val fromCoordinates = addressCoordinatesRepository.findByCep(input.fromCep)
+            ?: throw IllegalArgumentException("Invalid from Cep")
+
+        val toCoordinates = addressCoordinatesRepository.findByCep(input.toCep)
+            ?: throw IllegalArgumentException("Invalid to Cep")
 
         return input.items.sumOf {
             freightCalculator.calculate(
@@ -25,8 +28,8 @@ class CalculateFreight(
                     length = it.length.value.toPositiveDouble(),
                     weight = it.weight.value.toPositiveDouble(),
                     quantity = it.quantity,
-                    latitude = coordinates.latitude,
-                    longitude = coordinates.longitude
+                    from = Freight.Coordinates(fromCoordinates.latitude, fromCoordinates.longitude),
+                    to = Freight.Coordinates(toCoordinates.latitude, toCoordinates.longitude)
                 )
             )
         }
