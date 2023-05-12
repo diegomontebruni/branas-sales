@@ -3,6 +3,7 @@ package com.montebruni.sales.application.usecase.input
 import com.montebruni.sales.application.domain.valueobjects.PositiveDouble
 
 data class CalculateFreightInput(
+    val cep: String,
     val items: List<Item>
 ) {
     data class Item(

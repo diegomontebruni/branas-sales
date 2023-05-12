@@ -103,6 +103,27 @@ class OrderControllerIT : BaseRestIT() {
                 .andExpect(status().is2xxSuccessful)
                 .andExpect(jsonPath("freight_amount").value(expectedOutput.toString()))
                 .run {
+                    assertEquals(request.cep, useCaseSlot.captured.cep)
+                    assertEquals(request.items.size, useCaseSlot.captured.items.size)
+                }
+
+            verify { calculateFreight.execute(useCaseSlot.captured) }
+        }
+
+        @Test
+        fun `should return error 400 when try to find an invalid cep`() {
+            val request = createCalculateFreightRequest()
+            val useCaseSlot = slot<CalculateFreightInput>()
+
+            every { calculateFreight.execute(capture(useCaseSlot)) } throws IllegalArgumentException()
+
+            mockMvc.perform(
+                post("$baseUrl/simulate-freight")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(mapper.writeValueAsString(request))
+            )
+                .andExpect(status().is4xxClientError)
+                .run {
                     assertEquals(request.items.size, useCaseSlot.captured.items.size)
                 }
 

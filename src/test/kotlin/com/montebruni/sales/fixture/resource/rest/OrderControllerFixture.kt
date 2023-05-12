@@ -23,6 +23,7 @@ fun createOrderRequest() = CreateCheckoutRequest(
 )
 
 fun createCalculateFreightRequest() = CalculateFreightRequest(
+    cep = "12341241",
     items = listOf(
         CalculateFreightRequest.ItemRequest(
             quantity = 1,

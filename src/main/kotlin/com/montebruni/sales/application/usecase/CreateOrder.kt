@@ -5,7 +5,6 @@ import com.montebruni.sales.application.domain.entity.Item
 import com.montebruni.sales.application.domain.port.CouponRepository
 import com.montebruni.sales.application.domain.port.OrderRepository
 import com.montebruni.sales.application.domain.port.ProductRepository
-import com.montebruni.sales.application.domain.valueobjects.Amount
 import com.montebruni.sales.application.domain.valueobjects.Document
 import com.montebruni.sales.application.domain.valueobjects.OrderNumber
 import com.montebruni.sales.application.usecase.input.CreateOrderInput
