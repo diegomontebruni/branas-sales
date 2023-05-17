@@ -23,7 +23,7 @@ class DistanceFreightCalculatorTest(
     @Test
     fun `should calculate distance freight when given a valid input`() {
         val input = createFreightCalculatorInput().copy(calculatedValue = 0.009999999999999998)
-        val expectedOutput = 9.999999999999998
+        val expectedOutput = 2139.059195059149
 
         val nextHandleSlot = slot<FreightCalculatorInput>()
 

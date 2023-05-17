@@ -12,5 +12,7 @@ data class FreightCalculatorInput(
     var calculatedValue: Double = 0.0
 ) {
 
+    fun isSameCoordinates() = from.latitude == to.latitude && from.longitude == to.longitude
+
     data class Coordinates(val latitude: BigDecimal, val longitude: BigDecimal)
 }
