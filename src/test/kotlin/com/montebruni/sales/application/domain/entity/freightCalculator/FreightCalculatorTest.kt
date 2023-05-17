@@ -1,4 +1,4 @@
-package com.montebruni.sales.application.service.freightCalculator
+package com.montebruni.sales.application.domain.entity.freightCalculator
 
 import com.montebruni.sales.common.UnitTests
 import com.montebruni.sales.fixture.domain.createFreight

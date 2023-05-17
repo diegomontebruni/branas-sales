@@ -12,12 +12,14 @@ class FreightCalculatorAdapter : FreightCalculator {
 
     @Autowired private lateinit var handler: VolumeFreightCalculator
 
-    override fun calculate(input: Freight): Double = handler.calculate(
+    override fun calculate(input: Freight): Double = input.quantity * handler.calculate(
         FreightCalculatorInput(
-        height = input.height.value,
-        width = input.width.value,
-        length = input.length.value,
-        weight = input.weight.value
-    )
+            height = input.height.value,
+            width = input.width.value,
+            length = input.length.value,
+            weight = input.weight.value,
+            from = FreightCalculatorInput.Coordinates(latitude = input.from.latitude, longitude = input.from.longitude),
+            to = FreightCalculatorInput.Coordinates(latitude = input.to.latitude, longitude = input.to.longitude)
+        )
     ).toDecimal()
 }
