@@ -1,15 +1,11 @@
 package com.montebruni.sales.resource.rest
 
-import com.montebruni.sales.resource.rest.request.CalculateFreightRequest
-import com.montebruni.sales.resource.rest.request.CreateCheckoutRequest
-import com.montebruni.sales.resource.rest.request.toCalculateFreightInput
-import com.montebruni.sales.resource.rest.request.toCreateOrderInput
-import com.montebruni.sales.resource.rest.response.CreateCheckoutResponse
-import com.montebruni.sales.application.usecase.CalculateFreight
 import com.montebruni.sales.application.usecase.CreateOrder
 import com.montebruni.sales.application.usecase.FindOrderByOrderNumber
 import com.montebruni.sales.application.usecase.GetAllOrders
-import com.montebruni.sales.resource.rest.response.CalculateFreightResponse
+import com.montebruni.sales.resource.rest.request.CreateCheckoutRequest
+import com.montebruni.sales.resource.rest.request.toCreateOrderInput
+import com.montebruni.sales.resource.rest.response.CreateCheckoutResponse
 import com.montebruni.sales.resource.rest.response.OrderResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -27,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("v1/orders")
 class OrderController(
     private val createOrder: CreateOrder,
-    private val calculateFreight: CalculateFreight,
     private val findOrderByOrderNumber: FindOrderByOrderNumber,
     private val getAllOrders: GetAllOrders
 ) {
@@ -51,21 +46,6 @@ class OrderController(
                 totalAmount = it.totalAmount
             )
         }
-
-    @Operation(
-        summary = "Calculate the shipping cost of the order based on items dimensions.",
-        description = "Calculate the total shipping cost for the items.",
-        tags = ["Orders"]
-    )
-    @ApiResponses(
-        value = [
-            ApiResponse(responseCode = "200", description = "The checkout process is successful."),
-        ]
-    )
-    @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/simulate-freight")
-    fun calculateFreight(@RequestBody body: CalculateFreightRequest): CalculateFreightResponse =
-        CalculateFreightResponse(freightAmount = calculateFreight.execute(body.toCalculateFreightInput()))
 
     @Operation(
         summary = "Get the order by order number.",
