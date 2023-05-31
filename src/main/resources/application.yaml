@@ -36,6 +36,11 @@ logging:
             montebruni:
                 sales: ${LOG_LEVEL:DEBUG}
 
+client:
+    sales-catalog:
+        product:
+            host: http://localhost:8091
+
 springdoc:
     swagger-ui:
         path: /swagger-ui.html

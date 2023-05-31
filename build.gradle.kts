@@ -33,6 +33,10 @@ dependencies {
 
 	implementation("org.hibernate.validator:hibernate-validator:8.0.0.Final")
 
+	// Feign client
+	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+
+
 	// database
 	implementation("org.flywaydb:flyway-core")
 	runtimeOnly("org.postgresql:postgresql")
