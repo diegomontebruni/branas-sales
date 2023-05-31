@@ -34,6 +34,5 @@ create table items (
     order_id uuid not null,
     product_id uuid not null,
     quantity numeric not null,
-    FOREIGN KEY (order_id) REFERENCES orders (id),
-    FOREIGN KEY (product_id) REFERENCES products (id)
+    FOREIGN KEY (order_id) REFERENCES orders (id)
 );

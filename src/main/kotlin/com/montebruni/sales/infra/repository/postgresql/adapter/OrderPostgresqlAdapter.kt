@@ -1,11 +1,12 @@
 package com.montebruni.sales.infra.repository.postgresql.adapter
 
+import com.montebruni.sales.application.domain.entity.Item
 import com.montebruni.sales.application.domain.entity.Order
 import com.montebruni.sales.application.domain.port.OrderRepository
+import com.montebruni.sales.application.domain.port.ProductRepository
 import com.montebruni.sales.extensions.domain.entity.toItemPostgresqlModel
 import com.montebruni.sales.extensions.domain.entity.toOrderPostgresqlModel
 import com.montebruni.sales.extensions.repository.postgresql.toOrder
-import com.montebruni.sales.infra.repository.postgresql.model.ItemPostgresqlModel
 import com.montebruni.sales.infra.repository.postgresql.port.ItemPostgresqlRepository
 import com.montebruni.sales.infra.repository.postgresql.port.OrderPostgresqlRepository
 import jakarta.transaction.Transactional
@@ -16,11 +17,12 @@ import java.util.UUID
 @Service
 class OrderPostgresqlAdapter(
     @Autowired private val orderRepository: OrderPostgresqlRepository,
-    @Autowired private val itemRepository: ItemPostgresqlRepository
+    @Autowired private val itemRepository: ItemPostgresqlRepository,
+    @Autowired private val productRepository: ProductRepository
 ) : OrderRepository {
 
     @Transactional
-    override fun save(order: Order): Unit {
+    override fun save(order: Order) {
         val savedOrder = orderRepository.save(order.toOrderPostgresqlModel())
 
         order.items.map { item -> itemRepository.save(item.toItemPostgresqlModel(savedOrder.id)) }
@@ -36,7 +38,13 @@ class OrderPostgresqlAdapter(
         orderModel -> orderModel.toOrder(getOrderItemsByOrderId(orderModel.id))
     }
 
-    private fun getOrderItemsByOrderId(orderId: UUID): List<ItemPostgresqlModel> =
-        itemRepository.findByOrderId(orderId) ?:
+    private fun getOrderItemsByOrderId(orderId: UUID): List<Item> =
+        itemRepository.findByOrderId(orderId)?.map {
+            Item(
+                id = it.id,
+                quantity = it.quantity,
+                product = productRepository.findById(it.id)
+            )
+        } ?:
             throw IllegalArgumentException("Items not found for order id $orderId")
 }

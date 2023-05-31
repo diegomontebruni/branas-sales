@@ -4,7 +4,7 @@ import com.montebruni.sales.infra.repository.postgresql.model.ItemPostgresqlMode
 import java.util.*
 
 fun createItemPostgresqlModel() = ItemPostgresqlModel(
-    product = createProductPostgresqlModel(),
+    productId = UUID.randomUUID(),
     orderId = UUID.randomUUID(),
     quantity = 1
 )

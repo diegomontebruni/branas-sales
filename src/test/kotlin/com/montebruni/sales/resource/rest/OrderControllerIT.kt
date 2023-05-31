@@ -1,15 +1,12 @@
 package com.montebruni.sales.resource.rest
 
-import com.montebruni.sales.common.BaseRestIT
-import com.montebruni.sales.fixture.resource.rest.createOrderRequest
-import com.montebruni.sales.fixture.usecase.createCreateOrderOutput
-import com.montebruni.sales.application.usecase.CalculateFreight
 import com.montebruni.sales.application.usecase.CreateOrder
 import com.montebruni.sales.application.usecase.FindOrderByOrderNumber
 import com.montebruni.sales.application.usecase.GetAllOrders
-import com.montebruni.sales.application.usecase.input.CalculateFreightInput
 import com.montebruni.sales.application.usecase.input.CreateOrderInput
-import com.montebruni.sales.fixture.resource.rest.createCalculateFreightRequest
+import com.montebruni.sales.common.BaseRestIT
+import com.montebruni.sales.fixture.resource.rest.createOrderRequest
+import com.montebruni.sales.fixture.usecase.createCreateOrderOutput
 import com.montebruni.sales.fixture.usecase.createOrderOutput
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.confirmVerified
@@ -24,19 +21,16 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 
 @WebMvcTest(controllers = [OrderController::class])
 class OrderControllerIT : BaseRestIT() {
 
     @MockkBean
     private lateinit var createOrder: CreateOrder
-
-    @MockkBean
-    private lateinit var calculateFreight: CalculateFreight
 
     @MockkBean
     private lateinit var findOrderByOrderNumber: FindOrderByOrderNumber
@@ -48,7 +42,7 @@ class OrderControllerIT : BaseRestIT() {
 
     @AfterEach
     internal fun tearDown() {
-        confirmVerified(createOrder, calculateFreight, findOrderByOrderNumber, getAllOrders)
+        confirmVerified(createOrder, findOrderByOrderNumber, getAllOrders)
     }
 
     @Nested
@@ -79,56 +73,6 @@ class OrderControllerIT : BaseRestIT() {
                 }
 
             verify { createOrder.execute(useCaseSlot.captured) }
-        }
-    }
-
-    @Nested
-    @DisplayName("freight calculator")
-    inner class FreightCalculatorTestCases {
-
-        @Test
-        fun `should return double when creation is successfully`() {
-            val request = createCalculateFreightRequest()
-            val expectedOutput = 10.0
-
-            val useCaseSlot = slot<CalculateFreightInput>()
-
-            every { calculateFreight.execute(capture(useCaseSlot)) } returns expectedOutput
-
-            mockMvc.perform(
-                post("$baseUrl/simulate-freight")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(mapper.writeValueAsString(request))
-            )
-                .andExpect(status().is2xxSuccessful)
-                .andExpect(jsonPath("freight_amount").value(expectedOutput.toString()))
-                .run {
-                    assertEquals(request.fromCep, useCaseSlot.captured.fromCep)
-                    assertEquals(request.toCep, useCaseSlot.captured.toCep)
-                    assertEquals(request.items.size, useCaseSlot.captured.items.size)
-                }
-
-            verify { calculateFreight.execute(useCaseSlot.captured) }
-        }
-
-        @Test
-        fun `should return error 400 when try to find an invalid cep`() {
-            val request = createCalculateFreightRequest()
-            val useCaseSlot = slot<CalculateFreightInput>()
-
-            every { calculateFreight.execute(capture(useCaseSlot)) } throws IllegalArgumentException()
-
-            mockMvc.perform(
-                post("$baseUrl/simulate-freight")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(mapper.writeValueAsString(request))
-            )
-                .andExpect(status().is4xxClientError)
-                .run {
-                    assertEquals(request.items.size, useCaseSlot.captured.items.size)
-                }
-
-            verify { calculateFreight.execute(useCaseSlot.captured) }
         }
     }
 

@@ -1,7 +1,9 @@
 package com.montebruni.sales.infra.repository.postgresql.adapter
 
+import com.montebruni.sales.application.domain.port.ProductRepository
 import com.montebruni.sales.common.UnitTests
 import com.montebruni.sales.fixture.domain.createOrder
+import com.montebruni.sales.fixture.domain.createProduct
 import com.montebruni.sales.fixture.infra.repository.postgresql.createItemPostgresqlModel
 import com.montebruni.sales.fixture.infra.repository.postgresql.createOrderPostgresqlModel
 import com.montebruni.sales.infra.repository.postgresql.model.ItemPostgresqlModel
@@ -29,7 +31,8 @@ import kotlin.IllegalArgumentException
 
 class OrderPostgresqlAdapterTest(
     @MockK private val orderRepository: OrderPostgresqlRepository,
-    @MockK private val itemRepository: ItemPostgresqlRepository
+    @MockK private val itemRepository: ItemPostgresqlRepository,
+    @MockK private val productRepository: ProductRepository
 ) : UnitTests() {
 
     @InjectMockKs
@@ -37,7 +40,7 @@ class OrderPostgresqlAdapterTest(
 
     @AfterEach
     fun tearDown() {
-        confirmVerified(orderRepository, itemRepository)
+        confirmVerified(orderRepository, itemRepository, productRepository)
     }
 
     @Test
@@ -94,9 +97,11 @@ class OrderPostgresqlAdapterTest(
             val orderModel = createOrderPostgresqlModel()
             val orderItems = listOf(createItemPostgresqlModel())
             val orderIdSlot = slot<UUID>()
+            val productIdSlot = mutableListOf<UUID>()
 
             every { orderRepository.findByOrderNumber(orderModel.orderNumber) } returns orderModel
             every { itemRepository.findByOrderId(capture(orderIdSlot)) } returns orderItems
+            every { productRepository.findById(capture(productIdSlot))} returns createProduct()
 
             val order = orderAdapter.findByOrderNumber(orderNumber = orderModel.orderNumber)
 
@@ -106,6 +111,7 @@ class OrderPostgresqlAdapterTest(
             assertEquals(orderItems.first().id, order.items.first().id)
             assertEquals(orderModel.id, orderIdSlot.captured)
 
+            productIdSlot.forEach { verify { productRepository.findById(it) } }
             verify {
                 orderRepository.findByOrderNumber(orderModel.orderNumber)
                 itemRepository.findByOrderId(orderIdSlot.captured)
@@ -156,16 +162,19 @@ class OrderPostgresqlAdapterTest(
         fun `test getOrders with success`() {
             val orderModels = listOf(createOrderPostgresqlModel())
             val orderItems = listOf(createItemPostgresqlModel())
+            val productIdSlot = mutableListOf<UUID>()
 
-            coEvery { orderRepository.findAll() } returns orderModels
-            coEvery { itemRepository.findByOrderId(any()) } returns orderItems
+            every { orderRepository.findAll() } returns orderModels
+            every { itemRepository.findByOrderId(any()) } returns orderItems
+            every { productRepository.findById(capture(productIdSlot))} returns createProduct()
 
             val orders = orderAdapter.getOrders()
 
             assertEquals(orderModels.size, orders.size)
             assertEquals(orderModels.first().id, orders.first().id)
 
-            coVerify {
+            productIdSlot.forEach { verify { productRepository.findById(it) } }
+            verify {
                 orderRepository.findAll()
                 itemRepository.findByOrderId(any())
             }
@@ -175,14 +184,14 @@ class OrderPostgresqlAdapterTest(
         fun `test getOrders with failure`() {
             val orderModels = listOf(createOrderPostgresqlModel())
 
-            coEvery { orderRepository.findAll() } returns orderModels
-            coEvery { itemRepository.findByOrderId(any()) } returns null
+            every { orderRepository.findAll() } returns orderModels
+            every { itemRepository.findByOrderId(any()) } returns null
 
             assertThrows<IllegalArgumentException> { orderAdapter.getOrders() }.run {
                 assertTrue(this.message!!.contains("Items not found for order id"))
             }
 
-            coVerify {
+            verify {
                 orderRepository.findAll()
                 itemRepository.findByOrderId(any())
             }

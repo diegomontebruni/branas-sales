@@ -23,8 +23,6 @@ repositories {
 	mavenCentral()
 }
 
-extra["testContainersVersion"] = "1.17.6"
-
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -34,6 +32,10 @@ dependencies {
 	implementation("io.github.microutils:kotlin-logging-jvm:$kotlinLoggingVersion")
 
 	implementation("org.hibernate.validator:hibernate-validator:8.0.0.Final")
+
+	// Feign client
+	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+
 
 	// database
 	implementation("org.flywaydb:flyway-core")
