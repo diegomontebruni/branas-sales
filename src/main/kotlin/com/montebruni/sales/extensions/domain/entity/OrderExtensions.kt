@@ -7,6 +7,6 @@ fun Order.toOrderPostgresqlModel() = OrderPostgresqlModel(
     id = id,
     orderNumber = orderNumber.value,
     document = document.value,
-    totalAmount =  totalAmount.value.toDouble(),
+    totalAmount = totalAmount.value.toDouble(),
     coupon = coupon?.toCouponPostgresqlModel(),
 )

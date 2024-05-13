@@ -23,9 +23,11 @@ data class CreateCheckoutRequest(
 
 fun CreateCheckoutRequest.toCreateOrderInput() = CreateOrderInput(
     document = document,
-    items = items.map { CreateOrderInput.ItemInput(
-        productId = it.productId,
-        quantity = it.quantity
-    ) },
+    items = items.map {
+        CreateOrderInput.ItemInput(
+            productId = it.productId,
+            quantity = it.quantity
+        )
+    },
     coupon = coupon
 )

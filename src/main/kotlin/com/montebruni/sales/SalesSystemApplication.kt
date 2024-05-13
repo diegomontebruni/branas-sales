@@ -10,6 +10,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients
 @EnableFeignClients
 class SalesSystemApplication
 
+@Suppress("SpreadOperator")
 fun main(args: Array<String>) {
-	runApplication<SalesSystemApplication>(*args)
+    runApplication<SalesSystemApplication>(*args)
 }

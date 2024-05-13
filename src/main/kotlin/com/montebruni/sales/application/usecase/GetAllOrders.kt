@@ -12,16 +12,18 @@ class GetAllOrders(
 
     fun execute(): List<OrderOutput> = orderRepository.getOrders()?.map { createOutput(it) } ?: emptyList()
 
-    private fun createOutput(order: Order) : OrderOutput = OrderOutput(
+    private fun createOutput(order: Order): OrderOutput = OrderOutput(
         id = order.id,
         orderNumber = order.orderNumber.value,
         document = order.document.value,
         totalAmount = order.totalAmount.value.toDouble(),
-        items = order.items.map { OrderOutput.ItemOutput(
-            id = it.id,
-            productId = it.product.id,
-            quantity = it.quantity
-        ) },
+        items = order.items.map {
+            OrderOutput.ItemOutput(
+                id = it.id,
+                productId = it.product.id,
+                quantity = it.quantity
+            )
+        },
         coupon = order.coupon?.code
     )
 }

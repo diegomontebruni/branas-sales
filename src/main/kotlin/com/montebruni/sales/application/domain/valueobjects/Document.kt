@@ -3,7 +3,7 @@ package com.montebruni.sales.application.domain.valueobjects
 data class Document(val value: String) {
 
     init {
-        if (!isValidCPF()) throw IllegalArgumentException("Invalid CPF")
+        require(isValidCPF()) { "Invalid CPF" }
     }
 
     private fun isValidCPF(): Boolean {

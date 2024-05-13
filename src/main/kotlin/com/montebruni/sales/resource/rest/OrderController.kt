@@ -59,18 +59,20 @@ class OrderController(
     )
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{orderNumber}")
-    fun getByOrderNumber(@PathVariable orderNumber: String) : OrderResponse =
+    fun getByOrderNumber(@PathVariable orderNumber: String): OrderResponse =
         findOrderByOrderNumber.execute(orderNumber).let {
             OrderResponse(
                 id = it.id,
                 orderNumber = it.orderNumber,
                 document = it.document,
                 totalAmount = it.totalAmount,
-                items = it.items.map { item -> OrderResponse.ItemResponse(
-                    id = item.id,
-                    productId = item.productId,
-                    quantity = item.quantity
-                ) }
+                items = it.items.map { item ->
+                    OrderResponse.ItemResponse(
+                        id = item.id,
+                        productId = item.productId,
+                        quantity = item.quantity
+                    )
+                }
             )
         }
 
@@ -87,16 +89,18 @@ class OrderController(
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     fun getOrders(): List<OrderResponse> = getAllOrders.execute().map {
-            OrderResponse(
-                id = it.id,
-                orderNumber = it.orderNumber,
-                document = it.document,
-                totalAmount = it.totalAmount,
-                items = it.items.map { item -> OrderResponse.ItemResponse(
+        OrderResponse(
+            id = it.id,
+            orderNumber = it.orderNumber,
+            document = it.document,
+            totalAmount = it.totalAmount,
+            items = it.items.map { item ->
+                OrderResponse.ItemResponse(
                     id = item.id,
                     productId = item.productId,
                     quantity = item.quantity
-                ) }
-            )
-        }
+                )
+            }
+        )
+    }
 }

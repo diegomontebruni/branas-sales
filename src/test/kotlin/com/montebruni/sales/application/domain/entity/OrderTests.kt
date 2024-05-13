@@ -32,12 +32,16 @@ class OrderTests {
     fun `should throw exception when has a duplicated items`() {
         val duplicatedId = UUID.randomUUID()
 
-        assertThrows<IllegalArgumentException> { order.copy(items = listOf(
-            createOrderItem().copy(product = createProduct().copy(id = duplicatedId)),
-            createOrderItem().copy(product = createProduct().copy(id = duplicatedId)),
-            createOrderItem(),
-            createOrderItem()
-        )) }.let {
+        assertThrows<IllegalArgumentException> {
+            order.copy(
+                items = listOf(
+                    createOrderItem().copy(product = createProduct().copy(id = duplicatedId)),
+                    createOrderItem().copy(product = createProduct().copy(id = duplicatedId)),
+                    createOrderItem(),
+                    createOrderItem()
+                )
+            )
+        }.let {
             assertEquals(it.message, "Has duplicated items on list")
         }
     }

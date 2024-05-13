@@ -1,7 +1,7 @@
 package com.montebruni.sales.application.usecase
 
-import com.montebruni.sales.application.domain.entity.Order
 import com.montebruni.sales.application.domain.entity.Item
+import com.montebruni.sales.application.domain.entity.Order
 import com.montebruni.sales.application.domain.port.CouponRepository
 import com.montebruni.sales.application.domain.port.OrderRepository
 import com.montebruni.sales.application.domain.port.ProductRepository
@@ -20,7 +20,7 @@ class CreateOrder(
     @Autowired private val productRepository: ProductRepository,
 ) {
 
-    fun execute(input: CreateOrderInput) : CreateOrderOutput {
+    fun execute(input: CreateOrderInput): CreateOrderOutput {
         logger.info { "Creating order for document: ${input.document}" }
 
         val order = createOrderFromInput(input).also { orderRepository.save(it) }

@@ -1,6 +1,5 @@
 package com.montebruni.sales.application.domain.valueobjects
 
-import com.montebruni.sales.application.domain.valueobjects.PositiveDouble
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
