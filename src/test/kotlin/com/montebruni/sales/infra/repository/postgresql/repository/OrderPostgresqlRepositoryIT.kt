@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired
 class OrderPostgresqlRepositoryIT(
     @Autowired private val orderRepository: OrderPostgresqlRepository,
     @Autowired private val couponRepository: CouponPostgresqlRepository
-) : DatabaseIT() {
+) : DatabaseIT(listOf(orderRepository, couponRepository)) {
 
     @Nested
     @DisplayName("findTopByOrderByCreatedAtDesc")

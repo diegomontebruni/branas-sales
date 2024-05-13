@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import java.time.Year
 
 class FindOrderByOrderNumberTest(
     @MockK private val orderRepository: OrderRepository,
@@ -26,9 +27,10 @@ class FindOrderByOrderNumberTest(
         confirmVerified(orderRepository)
     }
 
+    private val orderNumber = "${Year.now().value}00000000"
+
     @Test
     fun `should returns order when has a valid order number`() {
-        val orderNumber = "202300000000"
         val order = createOrder()
 
         every { orderRepository.findByOrderNumber(orderNumber) } returns order
@@ -49,8 +51,6 @@ class FindOrderByOrderNumberTest(
 
     @Test
     fun `should throw exception when has an invalid order number`() {
-        val orderNumber = "202300000000"
-
         every { orderRepository.findByOrderNumber(orderNumber) } throws IllegalArgumentException()
 
         assertThrows<IllegalArgumentException> { findOrderByOrderNumber.execute(orderNumber) }

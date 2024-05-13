@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired
 
 class CouponPostgresqlRepositoryIT(
     @Autowired private val couponRepository: CouponPostgresqlRepository
-) : DatabaseIT() {
+) : DatabaseIT(couponRepository) {
 
     @Test
     fun `should save a coupon successfully`() {

@@ -35,7 +35,8 @@ class OrderPostgresqlAdapter(
     } ?: throw IllegalArgumentException("Order not found for order number $orderNumber")
 
     override fun getOrders(): List<Order> = orderRepository.findAll().map {
-        orderModel -> orderModel.toOrder(getOrderItemsByOrderId(orderModel.id))
+            orderModel ->
+        orderModel.toOrder(getOrderItemsByOrderId(orderModel.id))
     }
 
     private fun getOrderItemsByOrderId(orderId: UUID): List<Item> =
@@ -45,6 +46,6 @@ class OrderPostgresqlAdapter(
                 quantity = it.quantity,
                 product = productRepository.findById(it.id)
             )
-        } ?:
-            throw IllegalArgumentException("Items not found for order id $orderId")
+        }
+            ?: throw IllegalArgumentException("Items not found for order id $orderId")
 }

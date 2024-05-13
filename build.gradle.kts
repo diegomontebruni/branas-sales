@@ -1,23 +1,22 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot") version "3.0.5"
-	id("io.spring.dependency-management") version "1.1.0"
-	id("org.flywaydb.flyway") version "9.8.1"
-	kotlin("jvm") version "1.7.22"
-	kotlin("plugin.spring") version "1.7.22"
-	kotlin("plugin.jpa") version "1.7.22"
+	id("org.springframework.boot") version "3.2.4"
+	id("io.spring.dependency-management") version "1.1.4"
+	id("org.flywaydb.flyway") version "9.16.3"
+	id("io.gitlab.arturbosch.detekt") version "1.23.4"
+
+	kotlin("jvm") version "1.9.21"
+	kotlin("plugin.spring") version "1.9.21"
+	kotlin("plugin.jpa") version "1.9.21"
 }
 
 group = "com.montebruni"
 version = "1.0"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
-val mockkVersion = "1.13.4"
-val kotlinLoggingVersion = "3.0.5"
-val springMockkVersion = "3.1.2"
-val testContainerVersion = "1.18.0"
-val testMongoDbVersion = "1.18.0"
+extra["testContainerVersion"] = "1.19.3"
+extra["springCloudVersion"] = "2023.0.0"
 
 repositories {
 	mavenCentral()
@@ -29,13 +28,12 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("io.github.microutils:kotlin-logging-jvm:$kotlinLoggingVersion")
+	implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
 
 	implementation("org.hibernate.validator:hibernate-validator:8.0.0.Final")
 
 	// Feign client
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
-
 
 	// database
 	implementation("org.flywaydb:flyway-core")
@@ -53,15 +51,41 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude("org.mockito")
 	}
-	testImplementation("io.mockk:mockk:${mockkVersion}")
-	testImplementation("com.ninja-squad:springmockk:${springMockkVersion}")
+	testImplementation("io.mockk:mockk:1.13.4")
+	testImplementation("com.ninja-squad:springmockk:3.1.2")
+
+	detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.4")
 }
 
 dependencyManagement {
 	imports {
-		mavenBom("org.testcontainers:testcontainers-bom:$testContainerVersion")
-		mavenBom("org.springframework.cloud:spring-cloud-dependencies:2022.0.0")
+		mavenBom("org.testcontainers:testcontainers-bom:${property("testContainerVersion")}")
+		mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
 	}
+}
+
+detekt {
+	baseline = file("$projectDir/detekt/baseline.xml")
+	config.setFrom("$projectDir/detekt/detekt.yml")
+	buildUponDefaultConfig = true
+	autoCorrect = true
+}
+
+tasks.detekt {
+	reports {
+		xml.required.set(false)
+		html.required.set(false)
+		txt.required.set(false)
+		sarif.required.set(false)
+	}
+
+	include("**/*.kt", "**/*.kts")
+	exclude("**/resources/**", "**/build/**")
+}
+
+tasks.detektBaseline {
+	include("**/*.kt", "**/*.kts")
+	exclude("**/resources/**", "**/build/**")
 }
 
 tasks.withType<KotlinCompile> {

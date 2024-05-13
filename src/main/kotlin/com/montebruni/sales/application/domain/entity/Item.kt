@@ -10,7 +10,7 @@ data class Item(
 ) {
 
     init {
-        if (quantity < 1) throw IllegalArgumentException("Invalid quantity")
+        require(quantity > 0) { "Invalid quantity" }
     }
 
     fun calculateTotalAmount(): Amount = product.price.multiply(quantity)

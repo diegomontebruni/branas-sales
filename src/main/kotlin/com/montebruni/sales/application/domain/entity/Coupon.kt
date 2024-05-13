@@ -11,11 +11,19 @@ data class Coupon(
     val expirationAt: Instant
 ) {
 
+    companion object {
+        private const val PERCENTAGE_MIN = 0
+        private const val PERCENTAGE_MAX = 100
+    }
+
     init {
-        if (percentage < 0 || percentage > 100) throw IllegalArgumentException("Invalid percentage")
+        require(percentage in (PERCENTAGE_MIN + 1)..<PERCENTAGE_MAX) { "Invalid percentage" }
     }
 
     fun calculateDiscount(totalAmount: Amount): Amount = totalAmount.percentage(percentage)
     fun isValid(): Boolean = expirationAt.isAfter(Instant.now())
-    fun throwIfExpired(): Coupon = if (!isValid()) throw IllegalArgumentException("Expired coupon") else this
+    fun throwIfExpired(): Coupon {
+        require(isValid()) { "Expired coupon" }
+        return this
+    }
 }

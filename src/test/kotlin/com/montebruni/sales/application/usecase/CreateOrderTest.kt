@@ -1,12 +1,12 @@
 package com.montebruni.sales.application.usecase
 
-import com.montebruni.sales.common.UnitTests
 import com.montebruni.sales.application.domain.entity.Order
 import com.montebruni.sales.application.domain.port.CouponRepository
 import com.montebruni.sales.application.domain.port.OrderRepository
 import com.montebruni.sales.application.domain.port.ProductRepository
 import com.montebruni.sales.application.domain.valueobjects.Amount
 import com.montebruni.sales.application.domain.valueobjects.OrderNumber
+import com.montebruni.sales.common.UnitTests
 import com.montebruni.sales.fixture.domain.createCoupon
 import com.montebruni.sales.fixture.domain.createExpiredCoupon
 import com.montebruni.sales.fixture.domain.createProduct

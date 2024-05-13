@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>MagicNumber:Document.kt$Document$10</ID>
+    <ID>MagicNumber:Document.kt$Document$11</ID>
+    <ID>MagicNumber:Document.kt$Document$9</ID>
+    <ID>MagicNumber:OrderNumber.kt$OrderNumber$8</ID>
+    <ID>MagicNumber:OrderNumber.kt$OrderNumber.Companion$8</ID>
+  </CurrentIssues>
+</SmellBaseline>

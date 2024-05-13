@@ -4,10 +4,10 @@ import java.time.Year
 
 data class OrderNumber(var value: String) {
 
-    constructor(): this(generateCode())
+    constructor() : this(generateCode())
 
     init {
-        if (!isValidCode()) throw IllegalArgumentException("Invalid code")
+        require(isValidCode()) { "Invalid code" }
     }
 
     fun increment(): OrderNumber {
@@ -23,6 +23,7 @@ data class OrderNumber(var value: String) {
     private fun isValidCode(): Boolean = value.matches("""^\d{4}\d{8}$""".toRegex())
 
     companion object {
+
         private fun generateCode(): String = "${Year.now().value}${0.toString().repeat(8)}"
     }
 }

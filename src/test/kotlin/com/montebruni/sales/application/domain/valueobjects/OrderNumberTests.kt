@@ -17,14 +17,14 @@ class OrderNumberTests {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["202300000001", "202300000002", "202311111111"])
+    @ValueSource(strings = ["202400000001", "202400000002", "202411111111"])
     fun `should increment an order number when has a last code`(lastCode: String) {
         assertEquals(lastCode.toLong().inc().toString(), OrderNumber(lastCode).increment().value)
     }
 
     @Test
     fun `should throw exception when has a invalid last order number`() {
-        val lastCode = "2023000000A0"
+        val lastCode = "2024000000A0"
         assertThrows<IllegalArgumentException> { OrderNumber(lastCode).increment() }
     }
 }

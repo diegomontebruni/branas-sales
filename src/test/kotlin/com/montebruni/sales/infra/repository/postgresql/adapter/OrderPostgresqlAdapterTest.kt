@@ -10,8 +10,6 @@ import com.montebruni.sales.infra.repository.postgresql.model.ItemPostgresqlMode
 import com.montebruni.sales.infra.repository.postgresql.model.OrderPostgresqlModel
 import com.montebruni.sales.infra.repository.postgresql.port.ItemPostgresqlRepository
 import com.montebruni.sales.infra.repository.postgresql.port.OrderPostgresqlRepository
-import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
@@ -101,7 +99,7 @@ class OrderPostgresqlAdapterTest(
 
             every { orderRepository.findByOrderNumber(orderModel.orderNumber) } returns orderModel
             every { itemRepository.findByOrderId(capture(orderIdSlot)) } returns orderItems
-            every { productRepository.findById(capture(productIdSlot))} returns createProduct()
+            every { productRepository.findById(capture(productIdSlot)) } returns createProduct()
 
             val order = orderAdapter.findByOrderNumber(orderNumber = orderModel.orderNumber)
 
@@ -166,7 +164,7 @@ class OrderPostgresqlAdapterTest(
 
             every { orderRepository.findAll() } returns orderModels
             every { itemRepository.findByOrderId(any()) } returns orderItems
-            every { productRepository.findById(capture(productIdSlot))} returns createProduct()
+            every { productRepository.findById(capture(productIdSlot)) } returns createProduct()
 
             val orders = orderAdapter.getOrders()
 

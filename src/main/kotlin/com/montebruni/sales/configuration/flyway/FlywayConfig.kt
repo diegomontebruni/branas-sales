@@ -8,14 +8,14 @@ import javax.sql.DataSource
 
 @Configuration
 class FlywayConfig {
+
     @Autowired
     private lateinit var dataSource: DataSource
 
     @Bean(initMethod = "migrate")
-    fun flyway(): Flyway {
-        return Flyway.configure()
-            .dataSource(dataSource)
-            .locations("classpath:db/migration")
-            .load()
-    }
+    fun flyway(): Flyway = Flyway
+        .configure()
+        .dataSource(dataSource)
+        .locations("classpath:db/migration")
+        .load()
 }
