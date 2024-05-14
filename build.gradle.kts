@@ -28,33 +28,31 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
-
-	implementation("org.hibernate.validator:hibernate-validator:8.0.0.Final")
 
 	// Feign client
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+	implementation("io.github.openfeign:feign-okhttp")
 
 	// database
 	implementation("org.flywaydb:flyway-core")
 	runtimeOnly("org.postgresql:postgresql")
 
 	// Swagger
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
-
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 
 	// Testcontainer
 	testImplementation("org.testcontainers:junit-jupiter")
 	testImplementation("org.testcontainers:postgresql")
 
-	testImplementation("org.springframework.boot:spring-boot-starter-test") {
-		exclude("org.mockito")
-	}
-	testImplementation("io.mockk:mockk:1.13.4")
-	testImplementation("com.ninja-squad:springmockk:3.1.2")
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("io.mockk:mockk:1.13.8")
+	testImplementation("com.ninja-squad:springmockk:4.0.2")
+	testImplementation("com.github.tomakehurst:wiremock-jre8-standalone:3.0.1")
 
 	detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.4")
+	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 }
 
 dependencyManagement {
